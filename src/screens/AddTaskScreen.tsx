@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SafeAreaView, StyleSheet, Text, TextInput, View, TouchableOpacity, Switch, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Switch, ScrollView, Image } from 'react-native'
 import { NavigationProp } from '@react-navigation/native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useTranslation } from 'react-i18next'
@@ -46,7 +46,7 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
     const [showModalDatePicker, setShowModalDatePicker] = useState<boolean>(false)
     const [visibleSelectCate, setVisibleSelectCate] = useState(false)
     const categories = useSelector((state: StateModel) => selectCategories(state))
-    const [category, setCategory] = useState(route.params && route.params.data ?  route.params.data.category : categories[0])
+    const [category, setCategory] = useState(route.params && route.params.data && route.params.data.category ?  route.params.data.category : categories[0])
 
     const showDatePicker = () => {
         setShowModalDatePicker(true)
