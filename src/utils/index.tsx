@@ -2,12 +2,12 @@ import { Platform, Text, TouchableOpacity, View } from "react-native"
 import { Notifier } from "react-native-notifier"
 import Svg from "react-native-svg"
 import RNFS from 'react-native-fs'
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 
 import { Colors, Sizes, Fonts } from "../contants"
 import { CategoryModel, TaskModel } from "../models"
 import { saveLastSyncTime } from "../services/AsyncStorage"
 import { GoogleDrive } from "../apis/GoogleDrive"
-import { GoogleSignin } from "react-native-google-signin"
 
 
 export { default as Icons } from './Icons'

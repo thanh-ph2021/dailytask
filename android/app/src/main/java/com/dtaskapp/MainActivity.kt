@@ -5,6 +5,10 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
+import android.os.Bundle
+import android.view.WindowManager
+import org.devio.rn.splashscreen.SplashScreen
+
 class MainActivity : ReactActivity() {
 
   /**
@@ -12,6 +16,14 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "DTaskApp"
+
+  /**
+   * Show splash screen on app launch
+   */
+  override fun onCreate(savedInstanceState: Bundle?) {
+    SplashScreen.show(this, true)
+    super.onCreate(savedInstanceState)
+  }
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]

@@ -3,7 +3,7 @@ import { Image, StyleSheet, Switch, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { GoogleSignin, User } from 'react-native-google-signin'
+import { GoogleSignin, SignInResponse, User } from '@react-native-google-signin/google-signin'
 import moment from 'moment'
 
 import { selectCategories, selectTasks, selectTheme } from '../redux/selectors'
@@ -80,7 +80,8 @@ const AccountSyncScreen = () => {
     const signIn = async () => {
         try {
             await GoogleSignin.hasPlayServices()
-            const userInfo: User = await GoogleSignin.signIn()
+            const response: SignInResponse = await GoogleSignin.signIn()
+            const userInfo = response.data as User
             setUserData(userInfo)
             saveUserData(JSON.stringify(userInfo))
 

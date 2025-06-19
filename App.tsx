@@ -5,18 +5,16 @@ import { NotifierWrapper } from 'react-native-notifier'
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import PushNotification, { Importance } from "react-native-push-notification"
 import { PortalProvider } from "@gorhom/portal"
+import SplashScreen from 'react-native-splash-screen'
+import 'react-native-gesture-handler'
 
 import { store } from "./src/redux/store"
-import MainNavigator from "./src/navigations/MainNavigator"
-import { StatusBar } from "react-native"
 import DrawerNavigator from "./src/navigations/DrawerNavigator"
-import 'react-native-gesture-handler'
-import SplashScreen from "./src/screens/SplashScreen"
-
 
 function App() {
-  const [isShowSplash, setIsShowSplash] = useState(true)
   useEffect(() => {
+    SplashScreen.hide()
+
     PushNotification.createChannel(
       {
         channelId: "alert-channel-id-test",
@@ -28,33 +26,23 @@ function App() {
       },
       (created) => console.log(`createChannel 'alert-channel-id' returned '${created}'`)
     )
-
-    const timeout = setTimeout(() => {
-      setIsShowSplash(false)
-    }, 1500)
-
-    return () => clearTimeout(timeout)
   }, [])
 
   return (
     <>
-      {isShowSplash ? (<SplashScreen />) : (
-        <>
-          <Provider store={store}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <PortalProvider>
-                <NotifierWrapper>
-                  <NavigationContainer>
-                    <DrawerNavigator />
-                  </NavigationContainer>
-                </NotifierWrapper>
-              </PortalProvider>
-            </GestureHandlerRootView>
-          </Provider>
-        </>
-      )}
+      <Provider store={store}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <PortalProvider>
+            <NotifierWrapper>
+              <NavigationContainer>
+                <DrawerNavigator />
+              </NavigationContainer>
+            </NotifierWrapper>
+          </PortalProvider>
+        </GestureHandlerRootView>
+      </Provider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

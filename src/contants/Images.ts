@@ -1,6 +1,4 @@
 const banner1 = require('../assets/images/banner-1.jpg')
-const splashScreen = require('../assets/images/splash_screen.png')
-const hand = require('../assets/images/hand.png')
 const logo = require('../assets/images/logo.png')
 const overview = require('../assets/images/ic_overview.png')
 const drawer = require('../assets/images/ic_drawer.png')
@@ -56,8 +54,6 @@ const Images = {
     taxi,
     list,
     banner1,
-    splashScreen,
-    hand,
     logo,
     overview,
     drawer,
