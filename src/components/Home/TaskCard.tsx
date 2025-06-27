@@ -3,15 +3,17 @@ import { View, Text, TouchableOpacity, Image, TouchableWithoutFeedback } from 'r
 import Entypo from 'react-native-vector-icons/Entypo'
 import { useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 import { TaskModel } from '../../models/TaskModel'
-import { Colors, Images, Sizes } from '../../contants'
+import { Colors, Fonts, Images, Sizes } from '../../contants'
 import Icon, { TypeIcons } from '../Icon'
 import { completeTaskHandle, deleteTaskHandle, updateTaskHandle } from '../../redux/Reducers/TasksReducer'
 import AlertModal from '../AlertModal'
 import UtilStyles from '../../utils/UtilStyles'
 import TextComponent from '../TextComponent'
-import { useTranslation } from 'react-i18next'
+import { useTheme } from '../../hooks'
+import { formatActualTime } from '../../utils'
 
 type TaskCardProps = {
     data: TaskModel,
@@ -42,6 +44,7 @@ const TaskCard = ({
     const navigation = useNavigation<any>()
     const showAlert = data.isAlert && data.dateTime.getTime() > new Date().getTime()
     const { t } = useTranslation()
+    const {colors}= useTheme()
 
     const [alert, setAlert] = useState<{ visible: boolean, type: "warning" | "error" | "info", description: string, onOk: () => void }>({
         visible: false,
@@ -195,6 +198,13 @@ const TaskCard = ({
                             style={{ width: '65%', flexShrink: 1, opacity: data.completed ? 0.5 : 1, textDecorationLine: data.completed ? 'line-through' : undefined }}
                             text={data.description}
                         />
+                        {data.completed && data.actualFocusTimeInSec ? (
+                            <TextComponent
+                                style={Fonts.h3}
+                                color={colors.primary}
+                                text={`Pomodoro: ${formatActualTime(data.actualFocusTimeInSec)}`}
+                            />
+                        ) : <></>}
                         {renderButtonFooter()}
                     </View>
                 </TouchableWithoutFeedback >

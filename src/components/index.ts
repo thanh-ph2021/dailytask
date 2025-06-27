@@ -12,6 +12,7 @@ import InputModal from "./InputModal"
 import LoadingDialog from "./LoadingDialog"
 import SelectModal, { ICON_DATA } from "./SelectModal"
 import SelectModalv2 from "./SelectModalv2"
+import TaskCard from "./Home/TaskCard-2"
 
 export {
     Icon,
@@ -29,5 +30,6 @@ export {
     SelectModal,
     SelectModalv2,
     TextComponent,
-    ICON_DATA
+    ICON_DATA,
+    TaskCard
 }

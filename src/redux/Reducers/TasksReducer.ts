@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 
 import { TaskModel } from "../../models/TaskModel"
 import { addTaskStorage, getTaskStorage } from "../../services/AsyncStorage"
-import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, FETCH_TASKS, addTask, fetchTasks, UPDATE_TASK, updateTask, deleteTask, completeTask, ASYNC_TASKS, asyncTasks } from "../actions"
+import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, FETCH_TASKS, addTask, fetchTasks, UPDATE_TASK, updateTask, deleteTask, completeTask, ASYNC_TASKS, asyncTasks, COMPLETE_TASK_POMODORO, completeTaskPomodoro } from "../actions"
 import { Colors } from "../../contants"
 import { Icons, showNotification } from "../../utils"
 
@@ -30,6 +30,20 @@ const TasksReducer = (state: TaskModel[] = initialState, actions: any) => {
                     return {
                         ...task,
                         completed: !task.completed,
+                    }
+                }
+
+                return task
+            })
+            break
+
+        case COMPLETE_TASK_POMODORO:
+            newState = [...state].map(task => {
+                if (task.id == actions.payload.id) {
+                    return {
+                        ...task,
+                        completed: true,
+                        actualFocusTimeInSec: actions.payload.actualFocusTimeInSec,
                     }
                 }
 
@@ -185,6 +199,30 @@ export const completeTaskHandle = (id: string) => async (dispatch: any, getState
         await addTaskStorage(tasks)
 
         dispatch(completeTask(id))
+    } catch (error) {
+        console.log("🚀 ~ saveNewTask ~ error:", error)
+    }
+}
+
+export const completeTaskPomodoroHandle = (selectedTask: TaskModel) => async (dispatch: any, getState: any) => {
+    try {
+        PushNotification.cancelLocalNotification(selectedTask.id!.toString())
+        const state = getState()
+
+        const tasks = [...state.tasks].map(task => {
+            if (task.id == selectedTask.id!) {
+                return {
+                    ...task,
+                    completed: true,
+                    actualFocusTimeInSec: selectedTask.actualFocusTimeInSec,
+                }
+            }
+
+            return task
+        })
+        await addTaskStorage(tasks)
+
+        dispatch(completeTaskPomodoro(selectedTask))
     } catch (error) {
         console.log("🚀 ~ saveNewTask ~ error:", error)
     }

@@ -8,5 +8,6 @@ export interface TaskModel {
     dateTime: Date,
     isAlert?: boolean,
     categoryId?: string,
-    category?: CategoryModel
+    category?: CategoryModel,
+    actualFocusTimeInSec?: number
 }

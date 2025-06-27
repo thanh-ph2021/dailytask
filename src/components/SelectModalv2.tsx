@@ -31,7 +31,7 @@ const SelectModalv2 = ({ visible, onSubmit, data }: SelectModalProps) => {
                                     onPress={() => onSubmit(item)}
                                     style={{ width: '100%', alignItems: 'center' }}
                                 >
-                                    <TextComponent text={t(item)} style={{ ...Fonts.h3 }} />
+                                    <TextComponent text={t(item)} style={{ ...Fonts.body3 }} />
                                 </TouchableOpacity>
 
                                 {index < data.length - 1 && (

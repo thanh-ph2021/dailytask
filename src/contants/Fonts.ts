@@ -1,6 +1,7 @@
 import Sizes from "./Sizes";
 
 const Fonts = {
+    time: { fontFamily: "Roboto-Bold", fontSize: 48, lineHeight: 50},
     h1: { fontFamily: "Roboto-Black", fontSize: Sizes.h1, lineHeight: 36},
     h2: { fontFamily: "Roboto-Bold", fontSize: Sizes.h2, lineHeight: 30},
     h3: { fontFamily: "Roboto-Bold", fontSize: Sizes.h3, lineHeight: 22},

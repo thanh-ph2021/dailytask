@@ -77,7 +77,86 @@ const Icons = {
     svgArrowRight: ({ size, color }: Props) => <Svg width={size ? size * 513 / 479 : 513} height={size ? size * 479 / 513 : 479} viewBox="0 0 513 479" fill="none">
         <Path d="M505.635 223.416L289.07 6.85153C283.102 1.0487 274.491 -1.12911 266.481 1.13846C258.471 3.40602 252.28 9.77447 250.239 17.8449C248.197 25.9153 250.617 34.4615 256.586 40.2643L433.24 216.61H23.9333C11.1185 216.61 0.72998 226.998 0.72998 239.813C0.72998 252.628 11.1185 263.016 23.9333 263.016H432.931L256.586 439.362C252.163 443.671 249.669 449.584 249.669 455.759C249.669 461.934 252.163 467.847 256.586 472.156C260.85 476.631 266.803 479.102 272.983 478.962C279.141 478.991 285.052 476.538 289.38 472.156L505.944 255.591C514.992 246.532 514.992 231.856 505.944 222.797L505.635 223.416Z" fill={color ? color : 'black'} />
     </Svg>,
-
+    pomodoro: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M12.0001 4.6499C7.22008 4.6499 3.33008 8.5399 3.33008 13.3199C3.33008 18.0999 7.22008 21.9999 12.0001 21.9999C16.7801 21.9999 20.6701 18.1099 20.6701 13.3299C20.6701 8.5499 16.7801 4.6499 12.0001 4.6499ZM12.7501 12.9999C12.7501 13.4099 12.4101 13.7499 12.0001 13.7499C11.5901 13.7499 11.2501 13.4099 11.2501 12.9999V7.9999C11.2501 7.5899 11.5901 7.2499 12.0001 7.2499C12.4101 7.2499 12.7501 7.5899 12.7501 7.9999V12.9999Z" fill={color} />
+        <Path d="M14.8901 3.45H9.11014C8.71014 3.45 8.39014 3.13 8.39014 2.73C8.39014 2.33 8.71014 2 9.11014 2H14.8901C15.2901 2 15.6101 2.32 15.6101 2.72C15.6101 3.12 15.2901 3.45 14.8901 3.45Z" fill={color} />
+    </Svg>,
+    info: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M10.75 2.45001C11.45 1.86001 12.58 1.86001 13.26 2.45001L14.84 3.80001C15.14 4.05001 15.71 4.26001 16.11 4.26001H17.81C18.87 4.26001 19.74 5.13001 19.74 6.19001V7.89001C19.74 8.29001 19.95 8.85001 20.2 9.15001L21.55 10.73C22.14 11.43 22.14 12.56 21.55 13.24L20.2 14.82C19.95 15.12 19.74 15.68 19.74 16.08V17.78C19.74 18.84 18.87 19.71 17.81 19.71H16.11C15.71 19.71 15.15 19.92 14.85 20.17L13.27 21.52C12.57 22.11 11.44 22.11 10.76 21.52L9.18001 20.17C8.88001 19.92 8.31 19.71 7.92 19.71H6.17C5.11 19.71 4.24 18.84 4.24 17.78V16.07C4.24 15.68 4.04 15.11 3.79 14.82L2.44 13.23C1.86 12.54 1.86 11.42 2.44 10.73L3.79 9.14001C4.04 8.84001 4.24 8.28001 4.24 7.89001V6.20001C4.24 5.14001 5.11 4.27001 6.17 4.27001H7.9C8.3 4.27001 8.86 4.06001 9.16 3.81001L10.75 2.45001Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M12 8.13V12.96" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M11.9945 16H12.0035" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    arrowDown: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M19.9201 8.94995L13.4001 15.47C12.6301 16.24 11.3701 16.24 10.6001 15.47L4.08008 8.94995" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    play: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M17.49 9.60001L5.6 16.77C4.9 17.19 4 16.69 4 15.87V7.87001C4 4.38001 7.77 2.20001 10.8 3.94001L15.39 6.58001L17.48 7.78001C18.17 8.19001 18.18 9.19001 17.49 9.60001Z" fill={color} />
+        <Path d="M18.0898 15.46L14.0398 17.8L9.99981 20.13C8.54981 20.96 6.90981 20.79 5.71981 19.95C5.13981 19.55 5.20981 18.66 5.81981 18.3L18.5298 10.68C19.1298 10.32 19.9198 10.66 20.0298 11.35C20.2798 12.9 19.6398 14.57 18.0898 15.46Z" fill={color} />
+    </Svg>,
+    close: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M9.17004 14.83L14.83 9.17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M14.83 14.83L9.17004 9.17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    unlimited: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M10.18 9.32019C9.35999 8.19019 8.05001 7.4502 6.54001 7.4502C4.03001 7.4502 1.98999 9.49018 1.98999 12.0002C1.98999 14.5102 4.03001 16.5502 6.54001 16.5502C8.23001 16.5502 9.80001 15.6602 10.67 14.2102L12 12.0002L13.32 9.79016C14.19 8.34016 15.76 7.4502 17.45 7.4502C19.96 7.4502 22 9.49018 22 12.0002C22 14.5102 19.96 16.5502 17.45 16.5502C15.95 16.5502 14.64 15.8102 13.81 14.6802" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    arrowRight: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M14.4302 5.93005L20.5002 12.0001L14.4302 18.0701" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M3.5 12H20.33" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    tickCircle: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z" fill={color} />
+    </Svg>,
+    home: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M9.02 2.83999L3.63 7.03999C2.73 7.73999 2 9.22999 2 10.36V17.77C2 20.09 3.89 21.99 6.21 21.99H17.79C20.11 21.99 22 20.09 22 17.78V10.5C22 9.28999 21.19 7.73999 20.2 7.04999L14.02 2.71999C12.62 1.73999 10.37 1.78999 9.02 2.83999Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M12 17.99V14.99" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    homeFill: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M20.04 6.82L14.28 2.79C12.71 1.69 10.3 1.75 8.78999 2.92L3.77999 6.83C2.77999 7.61 1.98999 9.21 1.98999 10.47V17.37C1.98999 19.92 4.05999 22 6.60999 22H17.39C19.94 22 22.01 19.93 22.01 17.38V10.6C22.01 9.25 21.14 7.59 20.04 6.82ZM12.75 18C12.75 18.41 12.41 18.75 12 18.75C11.59 18.75 11.25 18.41 11.25 18V15C11.25 14.59 11.59 14.25 12 14.25C12.41 14.25 12.75 14.59 12.75 15V18Z" fill={color} />
+    </Svg>,
+    menu: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M3 7H21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+        <Path d="M3 12H21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+        <Path d="M3 17H21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+    </Svg>,
+    timer: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M15.7099 15.18L12.6099 13.33C12.0699 13.01 11.6299 12.24 11.6299 11.61V7.51001" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    timerFill: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.35 15.57C16.21 15.81 15.96 15.94 15.7 15.94C15.57 15.94 15.44 15.91 15.32 15.83L12.22 13.98C11.45 13.52 10.88 12.51 10.88 11.62V7.52C10.88 7.11 11.22 6.77 11.63 6.77C12.04 6.77 12.38 7.11 12.38 7.52V11.62C12.38 11.98 12.68 12.51 12.99 12.69L16.09 14.54C16.45 14.75 16.57 15.21 16.35 15.57Z" fill={color} />
+    </Svg>,
+    chart: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M3 22H21" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M5.59998 8.37988H4C3.45 8.37988 3 8.82988 3 9.37988V17.9999C3 18.5499 3.45 18.9999 4 18.9999H5.59998C6.14998 18.9999 6.59998 18.5499 6.59998 17.9999V9.37988C6.59998 8.82988 6.14998 8.37988 5.59998 8.37988Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M12.8002 5.18994H11.2002C10.6502 5.18994 10.2002 5.63994 10.2002 6.18994V17.9999C10.2002 18.5499 10.6502 18.9999 11.2002 18.9999H12.8002C13.3502 18.9999 13.8002 18.5499 13.8002 17.9999V6.18994C13.8002 5.63994 13.3502 5.18994 12.8002 5.18994Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M19.9999 2H18.3999C17.8499 2 17.3999 2.45 17.3999 3V18C17.3999 18.55 17.8499 19 18.3999 19H19.9999C20.5499 19 20.9999 18.55 20.9999 18V3C20.9999 2.45 20.5499 2 19.9999 2Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    chartFill: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M21 22.75H3C2.59 22.75 2.25 22.41 2.25 22C2.25 21.59 2.59 21.25 3 21.25H21C21.41 21.25 21.75 21.59 21.75 22C21.75 22.41 21.41 22.75 21 22.75Z" fill={color} />
+        <Path d="M5.6 8.37988H4C3.45 8.37988 3 8.82988 3 9.37988V17.9999C3 18.5499 3.45 18.9999 4 18.9999H5.6C6.15 18.9999 6.6 18.5499 6.6 17.9999V9.37988C6.6 8.81988 6.15 8.37988 5.6 8.37988Z" fill={color} />
+        <Path d="M12.8002 5.18994H11.2002C10.6502 5.18994 10.2002 5.63994 10.2002 6.18994V17.9999C10.2002 18.5499 10.6502 18.9999 11.2002 18.9999H12.8002C13.3502 18.9999 13.8002 18.5499 13.8002 17.9999V6.18994C13.8002 5.63994 13.3502 5.18994 12.8002 5.18994Z" fill={color} />
+        <Path d="M19.9999 2H18.3999C17.8499 2 17.3999 2.45 17.3999 3V18C17.3999 18.55 17.8499 19 18.3999 19H19.9999C20.5499 19 20.9999 18.55 20.9999 18V3C20.9999 2.45 20.5499 2 19.9999 2Z" fill={color} />
+    </Svg>,
+    star: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M13.73 3.51014L15.49 7.03014C15.73 7.52014 16.37 7.99014 16.91 8.08014L20.1 8.61014C22.14 8.95014 22.62 10.4301 21.15 11.8901L18.67 14.3701C18.25 14.7901 18.02 15.6001 18.15 16.1801L18.86 19.2501C19.42 21.6801 18.13 22.6201 15.98 21.3501L12.99 19.5801C12.45 19.2601 11.56 19.2601 11.01 19.5801L8.02 21.3501C5.88 22.6201 4.58 21.6701 5.14 19.2501L5.85 16.1801C5.98 15.6001 5.75 14.7901 5.33 14.3701L2.85 11.8901C1.39 10.4301 1.86 8.95014 3.9 8.61014L7.09 8.08014C7.62 7.99014 8.26 7.52014 8.5 7.03014L10.26 3.51014C11.22 1.60014 12.78 1.60014 13.73 3.51014Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    infoCircle: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M12 8V13" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M11.9945 16H12.0035" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    categories: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
+    setting: ({ size, color }: Props) => <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M2 12.8799V11.1199C2 10.0799 2.85 9.21994 3.9 9.21994C5.71 9.21994 6.45 7.93994 5.54 6.36994C5.02 5.46994 5.33 4.29994 6.24 3.77994L7.97 2.78994C8.76 2.31994 9.78 2.59994 10.25 3.38994L10.36 3.57994C11.26 5.14994 12.74 5.14994 13.65 3.57994L13.76 3.38994C14.23 2.59994 15.25 2.31994 16.04 2.78994L17.77 3.77994C18.68 4.29994 18.99 5.46994 18.47 6.36994C17.56 7.93994 18.3 9.21994 20.11 9.21994C21.15 9.21994 22.01 10.0699 22.01 11.1199V12.8799C22.01 13.9199 21.16 14.7799 20.11 14.7799C18.3 14.7799 17.56 16.0599 18.47 17.6299C18.99 18.5399 18.68 19.6999 17.77 20.2199L16.04 21.2099C15.25 21.6799 14.23 21.3999 13.76 20.6099L13.65 20.4199C12.75 18.8499 11.27 18.8499 10.36 20.4199L10.25 20.6099C9.78 21.3999 8.76 21.6799 7.97 21.2099L6.24 20.2199C5.33 19.6999 5.02 18.5299 5.54 17.6299C6.45 16.0599 5.71 14.7799 3.9 14.7799C2.85 14.7799 2 13.9199 2 12.8799Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>,
 }
 
 export default Icons

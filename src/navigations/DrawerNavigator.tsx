@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from "@react-navigation/drawer"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useNavigation, NavigationProp } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import i18n from 'i18next'
@@ -12,7 +12,6 @@ import { Image, Linking, View } from "react-native"
 import MainNavigator from "./MainNavigator"
 import { Fonts, Images, Sizes } from "../contants"
 import TextComponent from "../components/TextComponent"
-import UtilStyles from "../utils/UtilStyles"
 import Divider from "../components/Divider"
 import CategoriesScreen from "../screens/CategoriesScreen"
 import { AboutScreen, AccountSyncScreen } from "../screens"
@@ -21,6 +20,7 @@ import { setTheme } from "../redux/actions"
 import { useTheme } from "../hooks"
 import { fetchSomeCategory } from "../redux/Reducers/CategoriesReducer"
 import { name } from '../../package.json'
+import { Icons } from "../utils"
 
 const Drawer = createDrawerNavigator()
 
@@ -89,32 +89,32 @@ const DrawerNavigator = () => {
         <DrawerItem
           label={t('home')}
           labelStyle={{ color: colors.textPrimary }}
-          icon={() => <Image source={Images.home} style={[UtilStyles.icon, { tintColor: colors.textPrimary }]} />}
+          icon={() => <Icons.home size={30} color={colors.textPrimary}/>}
           onPress={() => navigation.navigate('Main')}
         />
         <DrawerItem
           label={t('categories')}
           labelStyle={{ color: colors.textPrimary }}
-          icon={() => <Image source={Images.category} style={[UtilStyles.icon, { tintColor: colors.textPrimary }]} />}
+          icon={() => <Icons.categories size={30} color={colors.textPrimary}/>}
           onPress={() => navigation.navigate('Categories')}
         />
         <Divider height={.4} color={colors.textSecondary} />
         <DrawerItem
           label={t('settings')}
           labelStyle={{ color: colors.textPrimary }}
-          icon={() => <Image source={Images.settings} style={[UtilStyles.icon, { tintColor: colors.textPrimary }]} />}
+          icon={() => <Icons.setting size={30} color={colors.textPrimary}/>}
           onPress={() => navigation.navigate('Settings')}
         />
         <DrawerItem
           label={t('rateThisApp')}
           labelStyle={{ color: colors.textPrimary }}
-          icon={() => <Image source={Images.star} style={[UtilStyles.icon, { tintColor: colors.textPrimary }]} />}
+          icon={() => <Icons.star size={30} color={colors.textPrimary}/>}
           onPress={() => Linking.openURL("https://play.google.com/store/apps/details?id=com.dtaskapp")}
         />
         <DrawerItem
           label={t('contactUs')}
           labelStyle={{ color: colors.textPrimary }}
-          icon={() => <Image source={Images.info} style={[UtilStyles.icon, { tintColor: colors.textPrimary }]} />}
+          icon={() => <Icons.infoCircle size={30} color={colors.textPrimary}/>}
           onPress={() => Linking.openURL("mailto:thanh.ph2021@gmail.com")}
         />
 

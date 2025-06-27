@@ -12,11 +12,12 @@ interface Props {
     title?: boolean,
     numberOfLines?: number,
     showFullLine?: boolean,
-    isShowTextRead?: boolean
+    isShowTextRead?: boolean,
+     textAlign?: "right" | "auto" | "left" | "center" | "justify" | undefined
 }
 const TextComponent = (props: Props) => {
 
-    const { text, color, size, flex, style, title, numberOfLines, showFullLine, isShowTextRead } = props
+    const { text, color, size, flex, style, title, numberOfLines, showFullLine, isShowTextRead, textAlign = 'left' } = props
     const [textShown, setTextShown] = useState(false)
     const [lengthMore, setLengthMore] = useState(false)
     const { colors } = useTheme()
@@ -43,7 +44,8 @@ const TextComponent = (props: Props) => {
                         flex: flex ?? 0,
                         fontSize: size ? size : title ? 18 : fontSizeDefault,
                         lineHeight: 21,
-                        fontFamily: 'Roboto-Regular'
+                        fontFamily: 'Roboto-Regular',
+                        textAlign: textAlign
                     },
                     style,
                 ]}

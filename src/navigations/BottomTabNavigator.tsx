@@ -2,18 +2,35 @@ import { View, TouchableOpacity, Image } from 'react-native'
 import { BottomTabBarProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { DrawerActions } from '@react-navigation/native'
 
-import HomeScreen from "../screens/HomeScreen"
 import { Colors, Images } from '../contants'
-import OverviewScreen from '../screens/OverviewScreen'
 import { useTheme } from '../hooks'
+import { PomodoroScreen, HomeScreen, OverviewScreen } from '../screens'
+import { Icons } from '../utils'
 
 type BottomTabParamList = {
     Drawer: undefined,
     Home: undefined,
     Overview: undefined,
+    Pomodoro: undefined,
 }
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
+
+const renderIcon = (routeName: string, isFocused: boolean) => {
+    const color = isFocused ? Colors.primary : "gray"
+    switch (routeName) {
+        case "Drawer":
+            return <Icons.menu size={30} color={color} />
+        case "Home":
+            return isFocused ? <Icons.homeFill size={30} color={color} /> : <Icons.home size={30} color={color} />
+        case "Pomodoro":
+            return isFocused ? <Icons.timerFill size={30} color={color} /> : <Icons.timer size={30} color={color} />
+        case "Overview":
+            return isFocused ? <Icons.chartFill size={30} color={color} /> : <Icons.chart size={30} color={color} />
+        default:
+            return null
+    }
+}
 
 const AppTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
     const { colors } = useTheme()
@@ -37,7 +54,7 @@ const AppTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
                             type: "tabPress",
                             target: route.key,
                             canPreventDefault: true,
-                        });
+                        })
 
                         if (!isFocused && !event.defaultPrevented) {
                             navigation.navigate(route.name)
@@ -51,15 +68,12 @@ const AppTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
                         onPress={onPress}
                         style={{ flex: 1, alignItems: "center", padding: 10 }}
                     >
-                        <Image
-                            source={route.name === "Drawer" ? Images.drawer : route.name === "Home" ? Images.home : Images.overview}
-                            style={{ width: 30, height: 30, tintColor: isFocused ? Colors.primary : "gray" }}
-                        />
+                        {renderIcon(route.name, isFocused)}
                     </TouchableOpacity>
-                );
+                )
             })}
         </View>
-    );
+    )
 }
 
 const BottomTabNavigator = () => {
@@ -71,10 +85,11 @@ const BottomTabNavigator = () => {
                 headerShown: false,
                 lazy: true
             }}
-            
+
         >
             <Tab.Screen name="Drawer" component={HomeScreen} />
             <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Pomodoro" component={PomodoroScreen} />
             <Tab.Screen name="Overview" component={OverviewScreen} />
         </Tab.Navigator>
     )

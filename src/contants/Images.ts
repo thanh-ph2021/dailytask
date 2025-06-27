@@ -35,8 +35,12 @@ const sortLeft = require('../assets/images/ic_sort_left.png')
 const sortRight = require('../assets/images/ic_sort_right.png')
 const info2 = require('../assets/images/ic_info_2.png')
 const category2 = require('../assets/images/ic_category_2.png')
+const pomodoroBg = require('../assets/images/pomodoro-bg.png')
+const pomodoroBgDark = require('../assets/images/pomodoro-bg-dark.png')
 
 const Images = {
+    pomodoroBgDark,
+    pomodoroBg,
     category2,
     sortLeft,
     sortRight,

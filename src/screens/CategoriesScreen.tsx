@@ -22,7 +22,6 @@ const initData = {
     icon: Images.category
 }
 
-
 const CategoriesScreen = () => {
 
     const navigation = useNavigation()
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
         borderRadius: Sizes.radius
     },
     optionText: {
-        ...Fonts.h3,
+        ...Fonts.body3,
         padding: Sizes.padding,
     },
     divider: {

@@ -9,6 +9,7 @@ export type ActionType = {
 export const ADD_TASK = 'ADD_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
 export const COMPLETE_TASK = 'COMPLETE_TASK'
+export const COMPLETE_TASK_POMODORO = 'COMPLETE_TASK_POMODORO'
 export const FETCH_TASKS = 'FETCH_TASKS'
 export const UPDATE_TASK = 'UPDATE_TASK'
 
@@ -40,6 +41,13 @@ export const completeTask = (id: string) => {
     return {
         type: COMPLETE_TASK,
         payload: id
+    }
+}
+
+export const completeTaskPomodoro = (data: TaskModel) => {
+    return {
+        type: COMPLETE_TASK_POMODORO,
+        payload: data
     }
 }
 

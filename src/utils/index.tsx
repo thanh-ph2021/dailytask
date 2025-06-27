@@ -8,13 +8,11 @@ import { Colors, Sizes, Fonts } from "../contants"
 import { CategoryModel, TaskModel } from "../models"
 import { saveLastSyncTime } from "../services/AsyncStorage"
 import { GoogleDrive } from "../apis/GoogleDrive"
-
-
 export { default as Icons } from './Icons'
 
-export const showNotification = (title: string, Icon: () => React.ReactElement) => {
+export const showNotification = (title: string, Icon: () => React.ReactElement, duration?: number) => {
     Notifier.showNotification({
-        duration: 2000,
+        duration: duration ?? 2000,
         title: title,
         Component: (props) => {
             return (
@@ -55,8 +53,8 @@ export const checkDayOrNight = () => {
 export const ChartClick = Platform.OS === 'android' ? Svg : TouchableOpacity
 
 export type BackupDataModel = {
-    categories: CategoryModel[], 
-    tasks: TaskModel[], 
+    categories: CategoryModel[],
+    tasks: TaskModel[],
     lastSyncTime: string
 }
 
@@ -82,3 +80,16 @@ export const handleAsyncData = async (data: BackupDataModel) => {
         await saveLastSyncTime(date)
     }
 }
+
+export const formatActualTime = (seconds: number): string => {
+    const hrs = Math.floor(seconds / 3600)
+    const mins = Math.floor((seconds % 3600) / 60)
+    const secs = seconds % 60
+
+    let result = '';
+    if (hrs > 0) result += `${hrs}h `
+    if (mins > 0) result += `${mins}m `
+    if (secs > 0 || result === '') result += `${secs}s`
+
+    return result.trim();
+};
