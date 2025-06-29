@@ -8,6 +8,7 @@ const Colors = {
     divider: '#ffeee3',
     switch: '#fff7f7',
     backgroundLight: '#fff7f7',
+    accent: "#E6A100",
     
 
     //colors

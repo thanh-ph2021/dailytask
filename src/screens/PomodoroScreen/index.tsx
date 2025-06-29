@@ -29,6 +29,7 @@ const PomodoroScreen = () => {
     const [timerMode, setTimerMode] = useState<'countdown' | 'countup'>('countdown')
     const [shouldOpenSheet, setShouldOpenSheet] = useState(false)
     const [isCompleting, setIsCompleting] = useState(false)
+    const [startAt, setStartAt] = useState<Date | null>(null)
 
     const openSheetWithMode = (mode: 'task' | 'timer' | 'info') => {
         setBottomSheetMode(mode)
@@ -74,11 +75,13 @@ const PomodoroScreen = () => {
             actualFocusTimeInSec: timerMode === 'countdown'
                 ? sessionCount * FOCUS_DURATION + (FOCUS_DURATION - secondsLeft)
                 : secondsLeft,
+            startAt: startAt!
         }))
         showNotification(t('taskCompleted', { something: selectedTask.title }), Icons.success, 4000)
         resetTimer()
         setSelectedTask(null)
         setIsCompleting(false)
+        setStartAt(null)
     }
 
     const handleSkipBreak = () => {
@@ -239,7 +242,10 @@ const PomodoroScreen = () => {
                     ) : (
                         <TouchableOpacity
                             style={[styles.startButton, { flexDirection: 'row', gap: Sizes.padding, backgroundColor: !selectedTask ? Colors.gray : colors.primary }]}
-                            onPress={() => setIsRunning(true)}
+                            onPress={() => {
+                                if (!startAt) setStartAt(new Date())
+                                setIsRunning(true)
+                            }}
                             disabled={!selectedTask}
                         >
                             <Icons.play color={Colors.white} size={24} />

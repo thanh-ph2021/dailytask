@@ -3,6 +3,9 @@ import { Notifier } from "react-native-notifier"
 import Svg from "react-native-svg"
 import RNFS from 'react-native-fs'
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { format, isSameDay, subDays } from "date-fns"
+import { Moment } from "moment"
+import moment from "moment"
 
 import { Colors, Sizes, Fonts } from "../contants"
 import { CategoryModel, TaskModel } from "../models"
@@ -82,14 +85,133 @@ export const handleAsyncData = async (data: BackupDataModel) => {
 }
 
 export const formatActualTime = (seconds: number): string => {
+    if(seconds === 0) return '0'
     const hrs = Math.floor(seconds / 3600)
     const mins = Math.floor((seconds % 3600) / 60)
     const secs = seconds % 60
 
-    let result = '';
+    let result = ''
     if (hrs > 0) result += `${hrs}h `
     if (mins > 0) result += `${mins}m `
     if (secs > 0 || result === '') result += `${secs}s`
 
-    return result.trim();
-};
+    return result.trim()
+}
+
+export const isToday = (dateStr: string) => {
+    const today = new Date()
+    const date = new Date(dateStr)
+    return (
+        date.getFullYear() === today.getFullYear() &&
+        date.getMonth() === today.getMonth() &&
+        date.getDate() === today.getDate()
+    )
+}
+
+export const isThisWeek = (dateStr: string) => {
+    const now = new Date()
+    const inputDate = new Date(dateStr)
+
+    const dayOfWeek = now.getDay() === 0 ? 7 : now.getDay()
+    const startOfWeek = new Date(now)
+    startOfWeek.setDate(now.getDate() - dayOfWeek + 1)
+    startOfWeek.setHours(0, 0, 0, 0)
+
+    const endOfWeek = new Date(now)
+    endOfWeek.setHours(23, 59, 59, 999)
+
+    return inputDate >= startOfWeek && inputDate <= endOfWeek
+}
+
+export const isThisMonth = (dateStr: string) => {
+    const now = new Date()
+    const inputDate = new Date(dateStr)
+    return (
+        inputDate.getFullYear() === now.getFullYear() &&
+        inputDate.getMonth() === now.getMonth()
+    )
+}
+
+type CellData = {
+  count: number
+  color: string
+}
+
+export type HourMap = Record<number, CellData>
+export type HeatmapData = Record<string, HourMap>
+
+export const HOURS = [...Array.from({ length: 24 - 8 }, (_, i) => i + 8), ...Array.from({ length: 8 }, (_, i) => i)]
+
+export const transformTasksToHeatmapData = (tasks: TaskModel[]): HeatmapData => {
+  const now = new Date()
+  const data: HeatmapData = {}
+
+  for (let i = 6; i >= 0; i--) {
+    const date = subDays(now, i)
+    const label = isSameDay(date, now)
+      ? 'today'
+      : isSameDay(date, subDays(now, 1))
+        ? 'yesterday'
+        : format(date, 'MMM dd')
+
+    data[label] = {}
+  }
+
+  tasks.forEach(task => {
+    if (!task.startAt || !task.category?.color || !task.actualFocusTimeInSec) return
+
+    const dateObj = typeof task.startAt === 'string' ? new Date(task.startAt) : task.startAt
+    let label = format(dateObj, 'MMM dd')
+    if (isSameDay(dateObj, now)) label = 'Today'
+    else if (isSameDay(dateObj, subDays(now, 1))) label = 'Yesterday'
+
+    const hour = new Date(dateObj).getHours()
+    const roundedHour = Math.floor(hour / 2) * 2
+
+    // Tính số session (mỗi 25 phút = 1500 giây)
+    const SESSION_LENGTH = 1500 // 25 phút
+    const sessionCount = Math.floor(task.actualFocusTimeInSec / SESSION_LENGTH)
+    if (sessionCount < 1) return // bỏ qua nếu chưa đủ 1 session
+
+    if (!data[label]) data[label] = {}
+    if (!data[label][roundedHour]) {
+      data[label][roundedHour] = { count: sessionCount, color: task.category.color }
+    } else {
+      data[label][roundedHour].count += sessionCount
+    }
+  })
+
+  return data
+}
+
+export type FocusDayData = {
+  label: string
+  durationInSec: number
+  color: string
+}
+export type WeeklyData = Record<string, FocusDayData[]>
+
+export const groupTasksByDay = (tasks: TaskModel[], startOfWeek: Moment, endOfWeek: Moment): WeeklyData => {
+    const grouped: WeeklyData = {}
+
+    for (let i = 0; i < 7; i++) {
+        const day = startOfWeek.clone().add(i, 'days').format('dddd').toLowerCase()
+        grouped[day] = []
+    }
+
+    tasks.forEach(task => {
+        const taskDate = moment(task.startAt)
+        if (taskDate.isBetween(startOfWeek, endOfWeek, 'day', '[]')) {
+            const dayKey = taskDate.format('dddd').toLowerCase()
+            const isToday = moment().isSame(taskDate, 'day')
+
+            grouped[dayKey].push({
+                label: task.title,
+                durationInSec: task.actualFocusTimeInSec ?? 0,
+                color: isToday ? Colors.accent : Colors.primary 
+            })
+        }
+    })
+
+    return grouped
+}

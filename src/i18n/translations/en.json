@@ -99,5 +99,17 @@
   "countdownDescription": "Countdown from 25 minutes until time runs out.",
   "countupDescription": "Start counting from 0 until stopped manually.",
   "shortBreak": "Short Break",
-  "longBreak": "Long Break"
+  "longBreak": "Long Break",
+  "thisWeek": "This Week",
+  "thisMonth": "This Month",
+  "thisYear": "This Year",
+  "tasks": "Tasks",
+  "focusTimeToday": "Focus Time Today",
+  "focusTimeThisWeek": "Focus Time This Week",
+  "focusTimeThisMonth": "Focus Time This Month",
+  "streakOfDays": "Streak of days",
+  "weeklyFocusTime": "Weekly Focus Time",
+  "focusTimeCategory": "Focus Time Category",
+  "pomodoroHeatmap": "Pomodoro Heatmap",
+  "yesterday": "Yesterday"
 }

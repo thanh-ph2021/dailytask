@@ -12,12 +12,13 @@ interface Props {
     title?: boolean,
     numberOfLines?: number,
     showFullLine?: boolean,
-    isShowTextRead?: boolean,
-     textAlign?: "right" | "auto" | "left" | "center" | "justify" | undefined
+    canExpand?: boolean,
+    upperCase?: boolean,
+    textAlign?: "right" | "auto" | "left" | "center" | "justify" | undefined
 }
 const TextComponent = (props: Props) => {
 
-    const { text, color, size, flex, style, title, numberOfLines, showFullLine, isShowTextRead, textAlign = 'left' } = props
+    const { text, color, size, flex, style, title, numberOfLines, showFullLine, canExpand = true, upperCase, textAlign = 'left' } = props
     const [textShown, setTextShown] = useState(false)
     const [lengthMore, setLengthMore] = useState(false)
     const { colors } = useTheme()
@@ -29,9 +30,7 @@ const TextComponent = (props: Props) => {
     }
 
     const onTextLayout = (event: NativeSyntheticEvent<TextLayoutEventData>) => {
-        if (!isShowTextRead) {
-            setLengthMore(event.nativeEvent.lines.length > (numberOfLines ?? 3))
-        }
+        setLengthMore(event.nativeEvent.lines.length > (numberOfLines ?? 3))
     }
 
     return (
@@ -51,16 +50,14 @@ const TextComponent = (props: Props) => {
                 ]}
                 onTextLayout={onTextLayout}
             >
-                {text}
+                {upperCase ? text!.toUpperCase() : text}
             </Text>
 
-            {lengthMore && !showFullLine ? <Text
+            {canExpand && lengthMore && !showFullLine ? <Text
                 onPress={toggleNumberOfLines}
                 style={{ lineHeight: 21, marginTop: 10, color: colors.primary }}
             >{textShown ? 'Read less' : 'Read more'}</Text> : <></>}
         </>
-
-
     )
 }
 

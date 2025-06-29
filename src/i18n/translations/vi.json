@@ -101,5 +101,17 @@
     "countdownDescription": "Đếm ngược từ 25 phút cho đến khi hết thời gian.",
     "countupDescription": "Bắt đầu đếm từ 0 cho đến khi bạn dừng lại thủ công.",
     "shortBreak": "Nghỉ ngắn",
-    "longBreak": "Nghỉ dài"
+    "longBreak": "Nghỉ dài",
+    "thisWeek": "Tuần này",
+    "thisMonth": "Tháng này",
+    "thisYear": "Năm nay",
+    "tasks": "Công việc",
+    "focusTimeToday": "Thời gian tập trung hôm nay",
+    "focusTimeThisWeek": "Thời gian tập trung tuần này",
+    "focusTimeThisMonth": "Thời gian tập trung tháng này",
+    "streakOfDays": "Chuỗi ngày liên tiếp",
+    "weeklyFocusTime": "Biểu đồ hiệu suất theo tuần",
+    "focusTimeCategory": "Hiệu suất theo loại công việc",
+    "pomodoroHeatmap": "Hoạt động Pomodoro theo giờ",
+    "yesterday": "Hôm qua"
 }

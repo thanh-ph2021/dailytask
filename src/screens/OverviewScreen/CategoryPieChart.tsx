@@ -71,8 +71,8 @@ const CategoryPieChart: React.FC<PieChartProps> = ({
             <View style={{ gap: Sizes.padding, width: '100%', padding: Sizes.padding }}>
                 {pendingDataByCategory.map((d, index) => (
                     <View key={index} style={{ flexDirection: 'row', alignItems: 'center', gap: Sizes.padding }}>
-                        <View style={{ backgroundColor: d.color, padding: Sizes.padding, borderRadius: Sizes.radius }}>
-                            <Image source={d.icon} style={{ width: 25, height: 25, tintColor: Colors.white }} />
+                        <View style={{ backgroundColor: d.color, padding: Sizes.padding/2, borderRadius: Sizes.radius }}>
+                            <Image source={d.icon} style={{ width: 15, height: 15, tintColor: Colors.white }} />
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Sizes.padding }}>
                             <TextComponent text={d.x} style={Fonts.body3} />

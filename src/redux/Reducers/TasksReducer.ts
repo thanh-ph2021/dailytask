@@ -44,6 +44,7 @@ const TasksReducer = (state: TaskModel[] = initialState, actions: any) => {
                         ...task,
                         completed: true,
                         actualFocusTimeInSec: actions.payload.actualFocusTimeInSec,
+                        startAt: actions.payload.startAt,
                     }
                 }
 
@@ -215,6 +216,7 @@ export const completeTaskPomodoroHandle = (selectedTask: TaskModel) => async (di
                     ...task,
                     completed: true,
                     actualFocusTimeInSec: selectedTask.actualFocusTimeInSec,
+                    startAt: selectedTask.startAt
                 }
             }
 
