@@ -10,5 +10,6 @@ export interface TaskModel {
     categoryId?: string,
     category?: CategoryModel,
     actualFocusTimeInSec?: number,
-    startAt?: Date
+    startAt?: Date,
+    repeat?: string 
 }

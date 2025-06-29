@@ -17,6 +17,7 @@ export type ThemeColor = {
     readonly info: string
 
     readonly input: string
+    readonly divider: string
 
 }
 

@@ -111,5 +111,15 @@
   "weeklyFocusTime": "Weekly Focus Time",
   "focusTimeCategory": "Focus Time Category",
   "pomodoroHeatmap": "Pomodoro Heatmap",
-  "yesterday": "Yesterday"
+  "yesterday": "Yesterday",
+  "repeat": "Repeat",
+  "none": "None",
+  "daily": "Daily",
+  "weekly": "Weekly",
+  "monthly": "Monthly",
+  "save": "Save",
+  "backingUpData": "Backing up data",
+  "shareApp": "Share App",
+  "feedback": "Send Feedback",
+  "shareMessage": "Check out this awesome app"
 }

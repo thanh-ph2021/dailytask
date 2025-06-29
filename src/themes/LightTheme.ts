@@ -17,8 +17,8 @@ const LightTheme: ThemeData = {
         accent: "#E6A100",
         highlight: "#D67800",
         info: "#4AC3FF",
-        input: "#F3F3F3"
-
+        input: "#F3F3F3",
+        divider: "#EEEEEE"
     }
 }
 

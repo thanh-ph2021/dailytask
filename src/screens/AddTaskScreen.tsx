@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Switch, ScrollView, Image } from 'react-native'
+import { StyleSheet, TextInput, View, TouchableOpacity, Switch, ScrollView, Image, ActivityIndicator } from 'react-native'
 import { NavigationProp } from '@react-navigation/native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useTranslation } from 'react-i18next'
@@ -11,7 +11,8 @@ import { saveNewTask, updateTaskHandle } from '../redux/Reducers/TasksReducer'
 import { useTheme } from '../hooks'
 import { StateModel, TaskModel } from '../models'
 import { selectCategories } from '../redux/selectors'
-import { AlertModal, Container, Header, Icon, SelectModal, TextComponent, TypeIcons } from '../components'
+import { AlertModal, Container, Divider, Header, Icon, SelectModal, SelectModalv2, TextComponent, TypeIcons } from '../components'
+import { Icons } from '../utils'
 
 type AddTaskScreenProps = {
     navigation: NavigationProp<RootStackParamList, 'AddTask'>,
@@ -30,8 +31,19 @@ const initData = {
     dateTime: getInitDate(),
     isAlert: false,
     completed: false,
-    categoryId: '1'
+    categoryId: '1',
+    repeat: 'none'
 }
+
+type OptionItemProps = {
+    Icon: () => React.ReactElement,
+    label: string,
+    ValueComponent: () => React.ReactElement,
+    onPress?: () => void
+    iconColor?: string
+}
+
+const REPEAT_OPTIONS = ['none', 'daily', 'weekly', 'monthly']
 
 const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
     const [data, setData] = useState<TaskModel>(route.params && route.params.data ? route.params.data : initData)
@@ -46,7 +58,10 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
     const [showModalDatePicker, setShowModalDatePicker] = useState<boolean>(false)
     const [visibleSelectCate, setVisibleSelectCate] = useState(false)
     const categories = useSelector((state: StateModel) => selectCategories(state))
-    const [category, setCategory] = useState(route.params && route.params.data && route.params.data.category ?  route.params.data.category : categories[0])
+    const [category, setCategory] = useState(route.params && route.params.data && route.params.data.category ? route.params.data.category : categories[0])
+    const [visibleSelect, setVisibleSelect] = useState(false)
+    const [selectedRepeat, setSelectedRepeat] = useState<(typeof REPEAT_OPTIONS)[number]>('none')
+    const [loading, setLoading] = useState(false)
 
     const showDatePicker = () => {
         setShowModalDatePicker(true)
@@ -96,24 +111,50 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
         setDataHandle('isAlert', !data.isAlert)
     }
 
-    const addTaskHandle = () => {
+    const addTaskHandle = async () => {
         if (validate()) {
+            setLoading(true)
+
             const dataHandled: TaskModel = {
                 ...data,
                 title: data.title.trim(),
                 description: data.description.trim(),
-                categoryId: category.id
+                categoryId: category.id,
+                repeat: selectedRepeat
             }
-            route.params ? dispatch(updateTaskHandle(dataHandled)) : dispatch(saveNewTask(dataHandled))
-            route.params && navigation.goBack()
-
-            setData(initData)
+            try {
+                if (route.params) {
+                    await dispatch(updateTaskHandle(dataHandled))
+                    navigation.goBack()
+                } else {
+                    await dispatch(saveNewTask(dataHandled))
+                }
+                setData(initData)
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setLoading(false)
+            }
         }
     }
 
     const onClose = () => {
         setAlert({ ...alert, visible: false })
     }
+
+
+
+    const OptionItem = ({ Icon, label, ValueComponent, onPress }: OptionItemProps) => (
+        <TouchableOpacity style={styles.row} onPress={onPress}>
+            <View style={styles.left}>
+                <Icon />
+                <TextComponent text={label} style={Fonts.h3} />
+            </View>
+            <View style={styles.right}>
+                <ValueComponent />
+            </View>
+        </TouchableOpacity>
+    )
 
     return (
         <Container>
@@ -125,57 +166,41 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                         <Icon type={TypeIcons.Feather} name='chevron-left' color={colors.textPrimary} size={Sizes.xl} />
                     </TouchableOpacity>
                 }
+                headerRight={
+                    <TouchableOpacity
+                        disabled={loading}
+                        style={{
+                            backgroundColor: colors.primary,
+                            padding: Sizes.padding / 2,
+                            borderRadius: Sizes.radius,
+                            width: 60,
+                            alignItems: 'center'
+                        }}
+                        onPress={addTaskHandle}
+                    >
+                        {loading ? (
+                            <ActivityIndicator color={Colors.white} size="small" />
+                        ) : (
+                            <TextComponent text={t('save').toUpperCase()} style={Fonts.h3} color={Colors.white} />
+                        )}
+                    </TouchableOpacity>
+                }
             />
 
             <View style={{ justifyContent: 'center' }}>
-                <View
-                    style={{
-                        backgroundColor: colors.surface,
-                        alignSelf: 'center',
-                        width: '70%',
-                        height: 15,
-                        borderTopLeftRadius: Sizes.l,
-                        borderTopRightRadius: Sizes.l,
-                        elevation: 6,
-                        opacity: 0.3
-                    }}
-                />
-                <View
-                    style={{
-                        backgroundColor: colors.surface,
-                        alignSelf: 'center',
-                        width: '80%',
-                        height: 15,
-                        borderTopLeftRadius: Sizes.l,
-                        borderTopRightRadius: Sizes.l,
-                        elevation: 6,
-                        opacity: 0.5
-                    }}
-                />
-
                 <ScrollView
-                    style={{
-                        backgroundColor: colors.surface,
-                        alignSelf: 'center',
-                        width: '85%',
-                        height: '75%',
-                        borderRadius: Sizes.l,
-                        elevation: 6,
-                        padding: Sizes.xl,
-                    }}
+                    style={{ marginHorizontal: Sizes.padding }}
                     showsVerticalScrollIndicator={false}
                 >
 
                     <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: Sizes.s }}>
-                            <Icon type={TypeIcons.MaterialIcons} name={'space-dashboard'} color={Colors.primary} size={Sizes.xl} />
-                            <TextComponent text={t('title').toUpperCase()} style={[styles.textTitle, { paddingLeft: Sizes.s }]} />
-                        </View>
+                        <TextComponent text={t('title')} style={{ ...Fonts.h3, marginVertical: Sizes.padding }} />
                         <TextInput
                             style={{
-                                borderColor: colors.primary,
+                                borderColor: colors.textSecondary,
+                                backgroundColor: colors.background,
                                 borderWidth: 1,
-                                borderRadius: Sizes.s,
+                                borderRadius: Sizes.radius,
                                 paddingHorizontal: Sizes.s,
                                 color: colors.textPrimary
                             }}
@@ -187,18 +212,16 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                     </View>
 
                     <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: Sizes.s }}>
-                            <Icon type={TypeIcons.Feather} name={'edit'} color={Colors.primary} size={Sizes.xl} />
-                            <TextComponent text={t('description').toUpperCase()} style={[styles.textTitle, { paddingLeft: Sizes.s }]} />
-                        </View>
+                        <TextComponent text={t('description')} style={{ ...Fonts.h3, marginVertical: Sizes.padding }} />
                         <TextInput
                             style={{
-                                borderColor: colors.primary,
+                                borderColor: colors.textSecondary,
+                                backgroundColor: colors.background,
                                 borderWidth: 1,
-                                borderRadius: Sizes.s,
+                                borderRadius: Sizes.radius,
                                 paddingHorizontal: Sizes.s,
+                                color: colors.textPrimary,
                                 textAlignVertical: 'top',
-                                color: colors.textPrimary
                             }}
                             multiline
                             numberOfLines={6}
@@ -208,103 +231,86 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                             placeholderTextColor={colors.textSecondary}
                         />
                     </View>
+                    <View style={{
+                        marginVertical: Sizes.padding,
+                        borderRadius: Sizes.radius,
+                        borderColor: colors.textSecondary,
+                        borderWidth: 1,
+                        padding: Sizes.padding
+                    }}>
+                        <OptionItem
+                            Icon={() => <Icons.calendar color={colors.text} size={24} />}
+                            label={t('dateTime')}
+                            ValueComponent={() => {
+                                return (
+                                    <View style={{ flexDirection: 'row', gap: Sizes.padding, alignSelf: 'flex-end' }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <TextComponent
+                                                text={`${data.dateTime.getHours() < 10 ? '0' + data.dateTime.getHours() : data.dateTime.getHours()} : ${data.dateTime.getMinutes() < 10 ? '0' + data.dateTime.getMinutes() : data.dateTime.getMinutes()}`}
+                                                style={Fonts.body3}
+                                            />
+                                        </View>
 
-                    <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: Sizes.s }}>
-                            <Image source={Images.category2} style={{ width: Sizes.xl, height: Sizes.xl }} />
-                            <Text style={[styles.textTitle, { paddingLeft: Sizes.s }]}>{t('category').toUpperCase()}</Text>
-                        </View>
-                        <TouchableOpacity
-                            style={{
-                                flexDirection: 'row',
-                                borderWidth: 1,
-                                borderRadius: Sizes.xl,
-                                borderColor: Colors.primary,
-                                padding: Sizes.padding,
-                                paddingVertical: Sizes.s,
-                                alignItems: 'center',
-                                alignSelf: 'flex-start',
-                                gap: Sizes.l
-                            }}
-                            onPress={() => setVisibleSelectCate(true)}
-                        >
-                            <TextComponent text={category.text} />
-                            <View style={{ backgroundColor: category.color, padding: 5, borderRadius: 5, alignItems: 'center' }}>
-                                <Image source={category.icon} style={{ width: 15, height: 15, tintColor: Colors.white }} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: Sizes.s }}>
-                            <Icon type={TypeIcons.Feather} name='calendar' color={Colors.primary} size={Sizes.xl} />
-                            <Text style={[styles.textTitle, { paddingLeft: Sizes.s }]}>{t('dateTime').toUpperCase()}</Text>
-                        </View>
-                        <TouchableOpacity
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-around',
-                                width: '80%',
-                                borderWidth: 1,
-                                borderRadius: Sizes.xl,
-                                borderColor: Colors.primary,
-                                paddingHorizontal: Sizes.s,
-                                alignItems: 'center'
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <TextComponent
+                                                text={`${data.dateTime.getDate() < 10 ? '0' + data.dateTime.getDate() : data.dateTime.getDate()}-${data.dateTime.getMonth() < 9 ? '0' + (data.dateTime.getMonth() + 1) : data.dateTime.getMonth() + 1}-${data.dateTime.getFullYear()}`}
+                                                style={Fonts.body3}
+                                            />
+                                        </View>
+                                    </View>
+                                )
                             }}
                             onPress={() => showDatePicker()}
-                        >
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '22%' }}>
-                                <TextComponent
-                                    text={`${data.dateTime.getHours() < 10 ? '0' + data.dateTime.getHours() : data.dateTime.getHours()}`}
-                                />
-                                <TextComponent
-                                    text=':'
-                                />
-                                <TextComponent
-                                    text={`${data.dateTime.getMinutes() < 10 ? '0' + data.dateTime.getMinutes() : data.dateTime.getMinutes()}`}
-                                />
-                            </View>
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '50%' }}>
-                                <TextComponent
-                                    text={`${data.dateTime.getDate() < 10 ? '0' + data.dateTime.getDate() : data.dateTime.getDate()}`}
-                                />
-                                <TextComponent
-                                    text='-'
-                                />
-                                <TextComponent
-                                    text={`${data.dateTime.getMonth() < 9 ? '0' + (data.dateTime.getMonth() + 1) : data.dateTime.getMonth() + 1}`}
-                                />
-                                <TextComponent
-                                    text='-'
-                                />
-                                <TextComponent
-                                    text={`${data.dateTime.getFullYear()}`}
-                                />
-                            </View>
-
-                            <Icon type={TypeIcons.Feather} name='chevron-down' size={Sizes.xl} color={Colors.primary} />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: Sizes.s }}>
-                            <Icon type={TypeIcons.Octicons} name={'stopwatch'} color={Colors.primary} size={Sizes.xl} />
-                            <Text style={[styles.textTitle, { paddingLeft: Sizes.s }]}>{t('alert').toUpperCase()}</Text>
-                        </View>
-                        <Switch
-                            trackColor={{ false: Colors.divider, true: Colors.primary }}
-                            thumbColor={data.isAlert ? Colors.divider : Colors.gray}
-                            onValueChange={onHanldeAlert}
-                            value={data.isAlert}
-                            style={{ alignSelf: 'flex-start' }}
+                        />
+                        <Divider height={1} color={colors.divider} />
+                        <OptionItem
+                            Icon={() => <Icons.categories color={colors.text} size={24} />}
+                            label={t('category')}
+                            ValueComponent={() => {
+                                return (
+                                    <View style={{ flexDirection: 'row', gap: Sizes.padding }}>
+                                        <TextComponent text={category.text} style={Fonts.body3} />
+                                        <View style={{ backgroundColor: category.color, padding: 5, borderRadius: 5, alignItems: 'center' }}>
+                                            <Image source={category.icon} style={{ width: 15, height: 15, tintColor: Colors.white }} />
+                                        </View>
+                                    </View>
+                                )
+                            }}
+                            onPress={() => setVisibleSelectCate(true)}
+                        />
+                        <Divider height={1} color={colors.divider} />
+                        <OptionItem
+                            Icon={() => <Icons.notification color={colors.text} size={24} />}
+                            label={t('alert')}
+                            ValueComponent={() => {
+                                return (
+                                    <Switch
+                                        trackColor={{ false: Colors.gray, true: Colors.primary }}
+                                        thumbColor={Colors.white}
+                                        onValueChange={onHanldeAlert}
+                                        value={data.isAlert}
+                                        style={{ alignSelf: 'flex-start' }}
+                                    />
+                                )
+                            }}
+                            onPress={onHanldeAlert}
+                        />
+                        <Divider height={1} color={colors.divider} />
+                        <OptionItem
+                            Icon={() => <Icons.repeat color={colors.text} size={24} />}
+                            label={t('repeat')}
+                            ValueComponent={() => {
+                                return (
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <TextComponent text={t(selectedRepeat)} style={Fonts.body3} />
+                                        <Icons.arrowRight2 size={24} color={colors.text} />
+                                    </View>
+                                )
+                            }}
+                            onPress={() => setVisibleSelect(true)}
                         />
                     </View>
                 </ScrollView>
-                <TouchableOpacity style={styles.buttonAdd} onPress={addTaskHandle}>
-                    <Icon type={TypeIcons.Entypo} name='check' color={Colors.text} size={Sizes.xxl} />
-                </TouchableOpacity>
             </View>
 
             <DateTimePickerModal
@@ -329,6 +335,14 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                 type='category'
                 navigation={navigation}
             />
+            <SelectModalv2
+                visible={visibleSelect}
+                data={REPEAT_OPTIONS}
+                onSubmit={(value) => {
+                    setSelectedRepeat(value)
+                    setVisibleSelect(false)
+                }}
+            />
         </Container>
     )
 }
@@ -336,20 +350,19 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
 export default AddTaskScreen
 
 const styles = StyleSheet.create({
-    buttonAdd: {
-        backgroundColor: Colors.primary,
-        borderRadius: 100,
-        padding: Sizes.s,
-        position: 'absolute',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        bottom: -20,
-        elevation: 6
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: Sizes.padding,
     },
-
-    textTitle: {
-        ...Fonts.h3,
-        fontWeight: 'bold',
-        color: Colors.primary
-    }
+    left: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: Sizes.s
+    },
+    right: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
 })

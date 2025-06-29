@@ -1,6 +1,7 @@
 import PushNotification from "react-native-push-notification"
 import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
+import moment from "moment"
 
 import { TaskModel } from "../../models/TaskModel"
 import { addTaskStorage, getTaskStorage } from "../../services/AsyncStorage"
@@ -106,7 +107,7 @@ export const saveNewTask = (data: TaskModel) => async (dispatch: any, getState: 
 
         showNotification('Add new task done!', Icons.success)
 
-        dispatch(addTask(task))
+        await dispatch(addTask(task))
     } catch (error) {
         console.log("🚀 ~ saveNewTask ~ error:", error)
     }
@@ -167,41 +168,86 @@ export const deleteTaskHandle = (id: string) => async (dispatch: any, getState: 
 export const completeTaskHandle = (id: string) => async (dispatch: any, getState: any) => {
     try {
         PushNotification.cancelLocalNotification(id.toString())
+
         const state = getState()
+        const tasks = [...state.tasks]
 
-        const tasks = [...state.tasks].map(task => {
-            if (task.id == id) {
-                if (task.isAlert && task.completed && task.dateTime.getTime() > new Date().getTime()) {
+        let newRepeatTask = null
+
+        const updatedTasks = tasks.map((task) => {
+            if (task.id !== id) return task
+
+            const isCompleted = !task.completed
+            const dateTime = new Date(task.dateTime)
+
+            // Nếu toggle sang completed và có repeat
+            if (isCompleted && task.repeat && task.repeat !== 'none') {
+                const repeatMap: Record<string, number> = {
+                    daily: 1,
+                    weekly: 7,
+                    monthly: 30,
+                }
+
+                const nextDate = moment(dateTime).add(repeatMap[task.repeat], 'days').toDate()
+
+                newRepeatTask = {
+                    ...task,
+                    id: nanoid(),
+                    completed: false,
+                    dateTime: nextDate,
+                }
+
+                // Tạo thông báo nếu cần
+                if (newRepeatTask.isAlert && nextDate > new Date()) {
                     PushNotification.localNotificationSchedule({
-                        date: task.dateTime,
-
-                        title: task.title,
-                        message: task.description,
-
+                        date: nextDate,
+                        title: newRepeatTask.title,
+                        message: newRepeatTask.description,
                         channelId: 'alert-channel-id-test',
                         autoCancel: true,
                         largeIcon: '',
                         color: Colors.primary,
                         showWhen: true,
-                        when: task.dateTime.getTime(),
-                        id: task.id!.toString(),
-                        // userInfo: {title: 'abc'},
-                        allowWhileIdle: true
+                        when: nextDate.getTime(),
+                        id: newRepeatTask.id.toString(),
+                        allowWhileIdle: true,
                     })
-                }
-                return {
-                    ...task,
-                    completed: !task.completed,
                 }
             }
 
-            return task
+            // Nếu task ban đầu có thông báo và đang chuyển sang completed → lập lại thông báo
+            if (task.isAlert && !isCompleted && dateTime > new Date()) {
+                PushNotification.localNotificationSchedule({
+                    date: dateTime,
+                    title: task.title,
+                    message: task.description,
+                    channelId: 'alert-channel-id-test',
+                    autoCancel: true,
+                    largeIcon: '',
+                    color: Colors.primary,
+                    showWhen: true,
+                    when: dateTime.getTime(),
+                    id: task.id.toString(),
+                    allowWhileIdle: true,
+                })
+            }
+
+            return {
+                ...task,
+                completed: isCompleted,
+            }
         })
-        await addTaskStorage(tasks)
+
+        await addTaskStorage(updatedTasks)
 
         dispatch(completeTask(id))
+
+        if (newRepeatTask) {
+            dispatch(addTask(newRepeatTask))
+        }
+
     } catch (error) {
-        console.log("🚀 ~ saveNewTask ~ error:", error)
+        console.log("🚀 ~ completeTaskHandle error:", error)
     }
 }
 
@@ -210,21 +256,61 @@ export const completeTaskPomodoroHandle = (selectedTask: TaskModel) => async (di
         PushNotification.cancelLocalNotification(selectedTask.id!.toString())
         const state = getState()
 
+        let newRepeatTask = null
+
         const tasks = [...state.tasks].map(task => {
-            if (task.id == selectedTask.id!) {
-                return {
+            if (task.id !== selectedTask.id!) return task
+
+            const isCompleted = !task.completed
+            const dateTime = new Date(task.dateTime)
+
+            if (isCompleted && task.repeat && task.repeat !== 'none') {
+                const repeatMap: Record<string, number> = {
+                    daily: 1,
+                    weekly: 7,
+                    monthly: 30,
+                }
+
+                const nextDate = moment(dateTime).add(repeatMap[task.repeat], 'days').toDate()
+
+                newRepeatTask = {
                     ...task,
-                    completed: true,
-                    actualFocusTimeInSec: selectedTask.actualFocusTimeInSec,
-                    startAt: selectedTask.startAt
+                    id: nanoid(),
+                    completed: false,
+                    dateTime: nextDate,
+                }
+
+                if (newRepeatTask.isAlert && nextDate > new Date()) {
+                    PushNotification.localNotificationSchedule({
+                        date: nextDate,
+                        title: newRepeatTask.title,
+                        message: newRepeatTask.description,
+                        channelId: 'alert-channel-id-test',
+                        autoCancel: true,
+                        largeIcon: '',
+                        color: Colors.primary,
+                        showWhen: true,
+                        when: nextDate.getTime(),
+                        id: newRepeatTask.id.toString(),
+                        allowWhileIdle: true,
+                    })
                 }
             }
 
-            return task
+            return {
+                ...task,
+                completed: true,
+                actualFocusTimeInSec: selectedTask.actualFocusTimeInSec,
+                startAt: selectedTask.startAt
+            }
         })
         await addTaskStorage(tasks)
 
         dispatch(completeTaskPomodoro(selectedTask))
+
+        if (newRepeatTask) {
+            dispatch(addTask(newRepeatTask))
+        }
     } catch (error) {
         console.log("🚀 ~ saveNewTask ~ error:", error)
     }

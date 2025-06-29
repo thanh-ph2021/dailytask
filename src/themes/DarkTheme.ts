@@ -18,8 +18,8 @@ const DarkTheme: ThemeData = {
         highlight: "#FF9800",
         info: "#007ACC",
 
-        input: "#646A74"
-
+        input: "#646A74",
+        divider: "#EEEEEE"
     }
 }
 

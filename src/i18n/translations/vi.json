@@ -113,5 +113,15 @@
     "weeklyFocusTime": "Biểu đồ hiệu suất theo tuần",
     "focusTimeCategory": "Hiệu suất theo loại công việc",
     "pomodoroHeatmap": "Hoạt động Pomodoro theo giờ",
-    "yesterday": "Hôm qua"
+    "yesterday": "Hôm qua",
+    "repeat": "Lặp lại",
+    "none": "Không lặp",
+    "daily": "Hàng ngày",
+    "weekly": "Hàng tuần",
+    "monthly": "Hàng tháng",
+    "save": "Lưu",
+    "backingUpData": "Đang sao lưu dữ liệu",
+    "shareApp": "Chia sẻ ứng dụng",
+    "feedback": "Đóng góp ý kiến",
+    "shareMessage": "Hãy thử ngay ứng dụng tuyệt vời này!"
 }

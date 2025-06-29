@@ -65,7 +65,7 @@ const AccountSyncScreen = () => {
     }
 
     const handleAsyncData = async () => {
-        setDialog({visible: true, description: 'backingUpData'})
+        setDialog({visible: true, description: t('backingUpData')})
         const date = new Date().toISOString()
         const filePath = await saveDataToFile({ categories, tasks, lastSyncTime: date })
         const token = await GoogleSignin.getTokens()
