@@ -30,6 +30,7 @@
   "description": "Description",
   "category": "Category",
   "alert": "Alert",
+  "dateTime": "Date time",
   "home": "Home",
   "categories": "Categories",
   "rateThisApp": "Rate this app",
@@ -128,5 +129,11 @@
   "ad_not_ready": "Ad is not ready yet",
   "watch_ad": "Watch ad",
   "scanMomo": "Scan Momo QR code",
-  "scanVietcombank": "Scan Vietcombank QR code"
+  "scanVietcombank": "Scan Vietcombank QR code",
+  "completed": "Completed",
+  "reopenTask": "Reopen Task",
+  "taskCompletedMessage": "You have completed the task\n\"{{title}}\"",
+  "taskUncompletedMessage": "You have marked the task as incomplete\n\"{{title}}\"",
+  "empty": "Empty",
+  "emptyMessage": "You have not added a task for this date."
 }

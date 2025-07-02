@@ -106,7 +106,7 @@ const OverviewPomodoro = () => {
                     selectedOption={selectedOption}
                     onPressSelectOption={() => setVisibleSelect(true)}
                 />
-                <PomodoroHeatmap data={heatmapData} t={t} />
+                <PomodoroHeatmap data={heatmapData} t={t} colors={colors} />
                 <SelectModalv2
                     visible={visibleSelect}
                     data={DATA_OPTIONS}

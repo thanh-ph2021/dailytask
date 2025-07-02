@@ -158,7 +158,7 @@ const SelectModal = ({ visible, onClose, onSubmit, type, navigation }: SelectMod
             onRequestClose={onClose}
         >
             <View style={UtilStyles.centeredView}>
-                <View style={[UtilStyles.modalView, { backgroundColor: colors.background, maxHeight: '80%' }]}>
+                <View style={[UtilStyles.modalView, { backgroundColor: colors.containerBackground, maxHeight: '80%' }]}>
                     <TextComponent text={t(type)} style={{ ...Fonts.h3 }} />
                     <Divider height={.5} color={Colors.gray} style={{ width: '100%' }} />
                     {renderContent()}

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { StyleSheet, View, TouchableOpacity, Switch, ToastAndroid } from "react-native"
+import { StyleSheet, View, TouchableOpacity, Switch } from "react-native"
 import { NavigationProp } from '@react-navigation/native'
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
@@ -59,7 +59,7 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
                     </TouchableOpacity>
                 }
             />
-            <View style={[styles.itemContainer, { backgroundColor: colors.surface }]}>
+            <View style={[styles.itemContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                 <TouchableOpacity
                     style={styles.itemContent}
                     onPress={() => navigation.navigate('AccountSyncScreen')}
@@ -84,7 +84,7 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
                     {renderLanguage()}
                 </TouchableOpacity>
             </View>
-            <View style={[styles.itemContainer, { backgroundColor: colors.surface }]}>
+            <View style={[styles.itemContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                 <TouchableOpacity
                     style={styles.itemContent}
                     onPress={() => navigation.navigate('AboutScreen')}
@@ -97,7 +97,7 @@ const SettingsScreen = ({ navigation }: SettingsScreenProps) => {
             <AppBottomSheet
                 ref={bottomSheetRef}
                 snapPoints={[Sizes.height * 0.35]}
-                backgroundStyle={{ backgroundColor: colors.surface }}
+                backgroundStyle={{ backgroundColor: colors.containerBackground }}
                 handleIndicatorStyle={{ backgroundColor: colors.text, opacity: .3 }}
                 containerStyle={{ margin: Sizes.padding, borderRadius: Sizes.padding }}
             >
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     itemContainer: {
         margin: Sizes.padding,
         paddingHorizontal: Sizes.padding,
-        borderRadius: Sizes.radius
+        borderRadius: Sizes.radius,
+        borderWidth: 1
     }
 })

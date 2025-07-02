@@ -4,7 +4,7 @@ import { TFunction } from 'i18next'
 
 import { TaskModel } from '../../models'
 import { Sizes, Fonts } from '../../contants'
-import { TextComponent, TaskCard } from '../../components'
+import { TextComponent, TaskCard2 } from '../../components'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 
 interface TaskSelectorProps {
@@ -22,7 +22,7 @@ const TaskSelector = ({ data, onSelect, colors, t }: TaskSelectorProps) => {
                 data={data}
                 keyExtractor={(item) => item.id!}
                 renderItem={({ item }) => (
-                    <TaskCard task={item} onSelect={() => onSelect(item)} />
+                    <TaskCard2 task={item} onSelect={() => onSelect(item)} hideAction/>
                 )}
                 contentContainerStyle={{ gap: Sizes.padding, marginBottom: Sizes.padding }}
                 showsVerticalScrollIndicator={false}

@@ -4,13 +4,13 @@ import { ThemeData } from "../redux/Reducers/ThemeReducer"
 const LightTheme: ThemeData = {
     isDark: false,
     colors: {
-        containerBackground: 'white',
+        containerBackground: "#FFFFFF",
         secondary: Colors.secondary,
         text: 'black',
         
         primary: '#179810',
         primaryLight: '#1FBF14',
-        background: "#FFFFFF",
+        background: "#F5F5F5",
         surface: "#BBEBC4",
         textPrimary: "#000000",
         textSecondary: "#444444",

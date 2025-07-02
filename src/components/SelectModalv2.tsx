@@ -23,7 +23,7 @@ const SelectModalv2 = ({ visible, onSubmit, data }: SelectModalProps) => {
             transparent={true}
             visible={visible}>
             <View style={UtilStyles.centeredView}>
-                <View style={[UtilStyles.modalView, { backgroundColor: colors.surface }]}>
+                <View style={[UtilStyles.modalView, { backgroundColor: colors.containerBackground }]}>
                     {data.map((item, index) => {
                         return (
                             <View key={index} style={{ width: '100%', alignItems: 'center' }}>
@@ -35,7 +35,7 @@ const SelectModalv2 = ({ visible, onSubmit, data }: SelectModalProps) => {
                                 </TouchableOpacity>
 
                                 {index < data.length - 1 && (
-                                    <Divider height={0.5} color={colors.textSecondary} style={{ width: '100%' }} />
+                                    <Divider height={1} color={colors.divider} style={{ width: '100%' }} />
                                 )}
                             </View>
                         )

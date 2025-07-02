@@ -15,7 +15,7 @@ interface Props {
 const DataCard: React.FC<Props> = ({ value, label, onPressInfo, colorValue }) => {
     const { colors } = useTheme()
     return (
-        <View style={[styles.card, { backgroundColor: colors.background }]}>
+        <View style={[styles.card, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
             <TextComponent
                 text={value}
                 style={[Fonts.h2, { fontWeight: 'bold' }]}
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         minWidth: '48%',
-        elevation: 6
+        borderWidth: 1
     },
 })
 

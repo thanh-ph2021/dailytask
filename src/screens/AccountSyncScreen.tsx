@@ -119,7 +119,7 @@ const AccountSyncScreen = () => {
                     </TouchableOpacity>
                 }
             />
-            <View style={[styles.itemContainer, { backgroundColor: colors.surface }]}>
+            <View style={[styles.itemContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                 <TouchableOpacity
                     style={styles.itemContent}
                     onPress={handleLogin}
@@ -146,7 +146,7 @@ const AccountSyncScreen = () => {
 
                 </TouchableOpacity>
             </View>
-            <View style={[styles.itemContainer, { backgroundColor: colors.surface }]}>
+            <View style={[styles.itemContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                 <TouchableOpacity
                     disabled={!userData}
                     style={[styles.itemContent, { opacity: userData ? 1 : 0.5 }]}
@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
         marginHorizontal: Sizes.padding,
         marginVertical: Sizes.padding / 2,
         padding: Sizes.padding,
-        borderRadius: Sizes.radius
+        borderRadius: Sizes.radius,
+        borderWidth: 1
     }
 })

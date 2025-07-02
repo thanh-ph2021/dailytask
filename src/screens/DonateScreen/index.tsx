@@ -22,7 +22,7 @@ const DonateScreen = () => {
     }
 
     return (
-        <Container style={{ backgroundColor: colors.background }}>
+        <Container>
             <Header
                 title={'Donate'.toUpperCase()}
                 textStyle={{ textAlign: 'center' }}
@@ -37,7 +37,7 @@ const DonateScreen = () => {
                 <TextComponent text={t('donateSupport')} style={Fonts.body3} textAlign="center" />
                 <TextComponent text={t('thankYou')} style={Fonts.body3} textAlign="center" />
             </View>
-            <View style={[styles.sectionContainer, { backgroundColor: colors.background }]}>
+            <View style={[styles.sectionContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                 <TouchableOpacity
                     style={styles.rowItem}
                     onPress={() => handlePressDonate('momo')}
@@ -51,7 +51,7 @@ const DonateScreen = () => {
                     <Icons.arrowRight2 color={colors.text} size={24} />
                 </TouchableOpacity>
             </View>
-            <View style={[styles.sectionContainer, { backgroundColor: colors.background }]}>
+            <View style={[styles.sectionContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                 <TouchableOpacity
                     style={styles.rowItem}
                     onPress={() => handlePressDonate('vcb')}
@@ -68,7 +68,7 @@ const DonateScreen = () => {
             {/* <DonateAdButton /> */}
             <Modal visible={visible} transparent animationType="fade">
                 <View style={styles.modalOverlay}>
-                    <View style={[styles.modalContent, { backgroundColor: colors.background }]}>
+                    <View style={[styles.modalContent, { backgroundColor: colors.containerBackground }]}>
                         <TextComponent
                             text={selectedMethod === 'momo' ? t('scanMomo') : t('scanVietcombank')}
                             style={Fonts.h4}
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         padding: Sizes.padding/2,
         marginTop: Sizes.l,
         borderRadius: Sizes.l,
-        elevation: 6,
+        borderWidth: 1
     },
     rowItem: {
         flexDirection: 'row',

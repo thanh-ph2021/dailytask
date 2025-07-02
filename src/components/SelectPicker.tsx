@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, ViewProps } from 'react-native'
-import { Colors, Fonts, Sizes } from '../contants'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
+
+import { Fonts, Sizes } from '../contants'
 import { useTheme } from '../hooks'
 import { Icons } from '../utils'
 import TextComponent from './TextComponent'
@@ -19,7 +20,7 @@ const SelectPicker: React.FC<Props> = ({ label, value, placeholder, onPress }) =
         <View style={styles.container}>
             {label && <TextComponent text={label} style={[styles.label, { color: colors.textPrimary }]}/>}
             <TouchableOpacity
-                style={[styles.inputContainer, { borderColor: colors.textSecondary }]}
+                style={[styles.inputContainer, { borderColor: colors.divider, backgroundColor: colors.containerBackground }]}
                 onPress={onPress}
             >
                 <TextComponent
@@ -47,7 +48,6 @@ const styles = StyleSheet.create({
         ...Fonts.h3,
     },
     inputContainer: {
-        backgroundColor: Colors.white,
         borderWidth: 0.5,
         borderRadius: Sizes.radius,
         paddingHorizontal: Sizes.padding,

@@ -1,4 +1,4 @@
-import Svg, { Defs, G, Image, Path, Pattern, Rect, Use } from "react-native-svg";
+import Svg, { Circle, Defs, G, Image, Path, Pattern, Rect, Use } from "react-native-svg";
 import Icon, { TypeIcons } from "../components/Icon";
 import { Colors, Sizes } from "../contants";
 
@@ -228,7 +228,60 @@ const Icons = {
             <Path d="M5.5 9.5V14.5" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
             <Path d="M18.5 9.5V14.5" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
         </Svg>
-    )
+    ),
+    Empty: ({ color = "#000", size = 24 }: Props) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M21.67 14.3L21.27 19.3C21.12 20.83 21 22 18.29 22H5.71001C3.00001 22 2.88001 20.83 2.73001 19.3L2.33001 14.3C2.25001 13.47 2.51001 12.7 2.98001 12.11C2.99001 12.1 2.99001 12.1 3.00001 12.09C3.55001 11.42 4.38001 11 5.31001 11H18.69C19.62 11 20.44 11.42 20.98 12.07C20.99 12.08 21 12.09 21 12.1C21.49 12.69 21.76 13.46 21.67 14.3Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" />
+            <Path d="M3.5 11.43V6.28003C3.5 2.88003 4.35 2.03003 7.75 2.03003H9.02C10.29 2.03003 10.58 2.41003 11.06 3.05003L12.33 4.75003C12.65 5.17003 12.84 5.43003 13.69 5.43003H16.24C19.64 5.43003 20.49 6.28003 20.49 9.68003V11.47" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M9.42999 17H14.57" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        </Svg>
+    ),
+    Trash: ({ color = "#000", size = 24 }: Props) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M18.85 9.14001L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79002C6.00002 22 5.91002 20.78 5.80002 19.21L5.15002 9.14001" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M10.33 16.5H13.66" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M9.5 12.5H14.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </Svg>
+    ),
+    Edit: ({ color = "#000", size = 24 }: Props) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M16.0399 3.02001L8.15988 10.9C7.85988 11.2 7.55988 11.79 7.49988 12.22L7.06988 15.23C6.90988 16.32 7.67988 17.08 8.76988 16.93L11.7799 16.5C12.1999 16.44 12.7899 16.14 13.0999 15.84L20.9799 7.96001C22.3399 6.60001 22.9799 5.02001 20.9799 3.02001C18.9799 1.02001 17.3999 1.66001 16.0399 3.02001Z" stroke={color} strokeWidth="1.5" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M14.9102 4.15002C15.5802 6.54002 17.4502 8.41002 19.8502 9.09002" stroke={color} strokeWidth="1.5" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        </Svg>
+    ),
+    Circle: ({ color = "#000", size = 24 }: Props) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke={color}
+                strokeWidth="3"
+                fill="none"
+            />
+        </Svg>
+    ),
+    CheckCircle: ({ color = "#000", size = 24 }: Props) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Circle
+                cx="12"
+                cy="12"
+                r="10"
+                fill={color}
+            />
+
+            <Path
+                d="M8.5 12.5L11 15L15.5 9.5"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </Svg>
+    ),
 }
 
 export default Icons

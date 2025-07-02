@@ -3,20 +3,22 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { TFunction } from 'i18next'
 
 import { TextComponent } from '../../components'
-import { Colors, Fonts, Sizes } from '../../contants'
+import { Fonts, Sizes } from '../../contants'
 import { HeatmapData, HOURS } from '../../utils'
+import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 
 type Props = {
   t: TFunction
+  colors: ThemeColor
   data: HeatmapData
 }
 
 const CELL_WIDTH = 56
 const CELL_HEIGHT = 40
 
-const PomodoroHeatmap = ({ data, t }: Props) => {
+const PomodoroHeatmap = ({ data, t, colors }: Props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.containerBackground, borderColor: colors.divider}]}>
       <TextComponent text={t('pomodoroHeatmap')} style={{ ...Fonts.h3, marginBottom: Sizes.padding }} />
       <ScrollView>
         <ScrollView horizontal>
@@ -70,7 +72,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: Sizes.radius,
     borderWidth: 1,
-    borderColor: Colors.gray,
     marginHorizontal: Sizes.padding,
     marginBottom: Sizes.padding,
     padding: Sizes.padding,

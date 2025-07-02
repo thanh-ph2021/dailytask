@@ -130,5 +130,11 @@
     "ad_not_ready": "Quảng cáo chưa sẵn sàng",
     "watch_ad": "Xem quảng cáo",
     "scanMomo": "Quét mã Momo",
-    "scanVietcombank": "Quét mã Vietcombank"
+    "scanVietcombank": "Quét mã Vietcombank",
+    "completed": "Đã hoàn thành",
+    "reopenTask": "Mở lại công việc",
+    "taskCompletedMessage": "Bạn đã hoàn thành công việc\n\"{{title}}\"",
+    "taskUncompletedMessage": "Bạn đã bỏ hoàn thành công việc\n\"{{title}}\"",
+    "empty": "Trống",
+    "emptyMessage": "Bạn chưa thêm công việc nào cho ngày này."
 }

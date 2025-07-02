@@ -4,7 +4,7 @@ import { VictoryAxis, VictoryBar, VictoryChart } from 'victory-native'
 import moment, { Moment } from 'moment'
 import { TFunction } from 'i18next'
 
-import { Colors, Fonts, Images, Sizes } from '../../contants'
+import { Fonts, Images, Sizes } from '../../contants'
 import { TextComponent } from '../../components'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 import { TaskModel } from '../../models'
@@ -41,9 +41,10 @@ const WeeklyBarChart: React.FC<BarChartProps> = ({
       alignItems: 'center',
       marginHorizontal: Sizes.padding,
       marginBottom: Sizes.padding,
-      borderColor: Colors.gray,
+      borderColor: colors.divider,
       borderWidth: 1,
-      borderRadius: Sizes.radius
+      borderRadius: Sizes.radius,
+      backgroundColor: colors.containerBackground
     }}>
       <View style={{
         justifyContent: 'space-between',

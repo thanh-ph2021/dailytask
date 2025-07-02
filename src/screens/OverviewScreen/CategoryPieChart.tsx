@@ -35,9 +35,10 @@ const CategoryPieChart: React.FC<PieChartProps> = ({
             alignItems: 'center',
             marginHorizontal: Sizes.padding,
             marginBottom: Sizes.padding,
-            borderColor: Colors.gray,
+            borderColor: colors.divider,
             borderWidth: 1,
-            borderRadius: Sizes.radius
+            borderRadius: Sizes.radius,
+            backgroundColor: colors.containerBackground
         }}>
             <View style={{
                 justifyContent: 'space-between',
@@ -49,7 +50,7 @@ const CategoryPieChart: React.FC<PieChartProps> = ({
                 <TextComponent text={t('pendingTasksIn')} style={{ ...Fonts.h3, width: '60%' }} />
 
                 <TouchableOpacity
-                    style={{ backgroundColor: colors.surface, padding: Sizes.padding / 2, borderRadius: Sizes.radius }}
+                    style={{ backgroundColor: colors.surface, padding: Sizes.padding / 2, borderRadius: Sizes.radius, borderColor: colors.divider, borderWidth: 1 }}
                     onPress={onPressSelectOption}
                 >
                     <TextComponent text={t(selectedOption)} style={Fonts.body3} />
@@ -71,7 +72,7 @@ const CategoryPieChart: React.FC<PieChartProps> = ({
             <View style={{ gap: Sizes.padding, width: '100%', padding: Sizes.padding }}>
                 {pendingDataByCategory.map((d, index) => (
                     <View key={index} style={{ flexDirection: 'row', alignItems: 'center', gap: Sizes.padding }}>
-                        <View style={{ backgroundColor: d.color, padding: Sizes.padding/2, borderRadius: Sizes.radius }}>
+                        <View style={{ backgroundColor: d.color, padding: Sizes.padding / 2, borderRadius: Sizes.radius }}>
                             <Image source={d.icon} style={{ width: 15, height: 15, tintColor: Colors.white }} />
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: Sizes.padding }}>

@@ -5,7 +5,7 @@ import { VictoryPie } from 'victory-native'
 import { TFunction } from 'i18next'
 
 import { formatActualTime } from '../../utils'
-import { Colors, Fonts, Sizes } from '../../contants'
+import { Fonts, Sizes } from '../../contants'
 import { TextComponent } from '../../components'
 import { FocusCategoryLegend } from './FocusCategoryLegend'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
@@ -94,7 +94,7 @@ const FocusCategoryChart = ({ data, t, colors, selectedOption, onPressSelectOpti
   })
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.containerBackground, borderColor: colors.divider}]}>
       <View style={{
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -104,7 +104,7 @@ const FocusCategoryChart = ({ data, t, colors, selectedOption, onPressSelectOpti
         <TextComponent text={t('focusTimeCategory')} style={{ ...Fonts.h3, width: '60%' }} />
 
         <TouchableOpacity
-          style={{ backgroundColor: colors.surface, padding: Sizes.padding / 2, borderRadius: Sizes.radius }}
+          style={{ backgroundColor: colors.surface, padding: Sizes.padding / 2, borderRadius: Sizes.radius, borderColor: colors.divider, borderWidth: 1 }}
           onPress={onPressSelectOption}
         >
           <TextComponent text={t(selectedOption)} style={Fonts.body3} />
@@ -131,6 +131,7 @@ const FocusCategoryChart = ({ data, t, colors, selectedOption, onPressSelectOpti
           alignmentBaseline="middle"
           fontSize="25"
           fontWeight="bold"
+          fill={colors.text}
         >
           {formatActualTime(total)}
         </SvgText>
@@ -145,7 +146,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: Sizes.radius,
     borderWidth: 1,
-    borderColor: Colors.gray,
     marginHorizontal: Sizes.padding,
     marginBottom: Sizes.padding,
     padding: Sizes.padding,

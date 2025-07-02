@@ -28,7 +28,7 @@ const InputModal = ({ visible, onClose, onSubmit, value }: InputModalProps) => {
             visible={visible}
             onRequestClose={onClose}>
             <View style={styles.centeredView}>
-                <View style={[styles.modalView, { backgroundColor: colors.background }]}>
+                <View style={[styles.modalView, { backgroundColor: colors.containerBackground }]}>
                     <View style={{ width: '90%', marginVertical: Sizes.padding }}>
                         <TextInput
                             style={{ borderWidth: 1, borderColor: colors.primary, borderRadius: Sizes.s, paddingHorizontal: Sizes.s, color: colors.textPrimary }}

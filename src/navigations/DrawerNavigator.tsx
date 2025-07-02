@@ -19,7 +19,7 @@ import { getAppLanguage, getAppTheme } from "../services/AsyncStorage"
 import { setTheme } from "../redux/actions"
 import { useTheme } from "../hooks"
 import { fetchSomeCategory } from "../redux/Reducers/CategoriesReducer"
-import { name } from '../../package.json'
+import { displayName } from '../../app.json'
 import { Icons } from "../utils"
 
 const Drawer = createDrawerNavigator()
@@ -85,7 +85,7 @@ const DrawerNavigator = () => {
       <DrawerContentScrollView {...props} style={{ backgroundColor: colors.background }}>
         <View style={{ alignItems: 'center', marginVertical: Sizes.padding * 2 }}>
           <Image source={Images.logo} style={{ width: 100, height: 100 }} />
-          <TextComponent text={name} style={{ ...Fonts.h2, fontWeight: 'bold' }} />
+          <TextComponent text={displayName} style={{ ...Fonts.h2, fontWeight: 'bold' }} />
         </View>
         <Divider height={.4} color={colors.textSecondary} />
         <DrawerItem

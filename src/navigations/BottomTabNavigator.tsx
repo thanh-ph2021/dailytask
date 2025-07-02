@@ -1,8 +1,8 @@
-import { View, TouchableOpacity, Image } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { BottomTabBarProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { DrawerActions } from '@react-navigation/native'
 
-import { Colors, Images } from '../contants'
+import { Colors } from '../contants'
 import { useTheme } from '../hooks'
 import { PomodoroScreen, HomeScreen, OverviewScreen } from '../screens'
 import { Icons } from '../utils'
@@ -40,7 +40,7 @@ const AppTabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: colors.background,
+            backgroundColor: colors.containerBackground,
             elevation: 6
         }}>
             {state.routes.map((route, index) => {

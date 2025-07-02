@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { TFunction } from 'i18next'
 import { Moment } from 'moment'
 
-import { Colors, Fonts, Images, Sizes } from '../../contants'
+import { Fonts, Images, Sizes } from '../../contants'
 import { TextComponent } from '../../components'
 import { formatActualTime, WeeklyData } from '../../utils'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
@@ -36,7 +36,7 @@ const WeeklyFocusChart = ({
     const daysOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
             <View style={styles.header}>
                 <TextComponent
                     text={t('weeklyFocusTime')}
@@ -66,7 +66,7 @@ const WeeklyFocusChart = ({
                             <TextComponent text={t(dayKey)} />
                             <TextComponent text={formatActualTime(total)} style={Fonts.h3} />
                         </View>
-                        <View style={styles.barBackground}>
+                        <View style={[styles.barBackground, { backgroundColor: colors.divider }]}>
                             <View
                                 style={{
                                     flexDirection: 'row',
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: Sizes.radius,
         borderWidth: 1,
-        borderColor: Colors.gray,
         marginHorizontal: Sizes.padding,
         marginBottom: Sizes.padding,
         padding: Sizes.padding,
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
     },
     barBackground: {
         height: 8,
-        backgroundColor: Colors.gray,
         borderRadius: 4,
         overflow: 'hidden',
     },

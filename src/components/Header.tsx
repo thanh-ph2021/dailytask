@@ -2,11 +2,10 @@ import { ReactElement } from 'react'
 import { View, StyleSheet, TextStyle } from 'react-native'
 import { useSelector } from 'react-redux'
 
-import { Sizes } from '../contants'
+import { Fonts, Sizes } from '../contants'
 import TextComponent from './TextComponent'
 import { StateModel } from '../models/StateModel'
 import { selectTheme } from '../redux/selectors'
-
 
 type HeaderProps = {
     headerLeft?: ReactElement
@@ -41,12 +40,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: Sizes.l,
         marginTop: Sizes.xl,
-
     },
 
     text: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        ...Fonts.h2,
         paddingHorizontal: Sizes.l,
     },
 

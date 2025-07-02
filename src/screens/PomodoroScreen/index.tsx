@@ -168,7 +168,7 @@ const PomodoroScreen = () => {
                     {selectedTask ? (
                         <View style={{
                             flexDirection: 'row',
-                            backgroundColor: Colors.white,
+                            backgroundColor: colors.containerBackground,
                             paddingVertical: Sizes.padding * 1.5,
                             paddingHorizontal: Sizes.padding,
                             borderRadius: Sizes.radius,
@@ -178,9 +178,9 @@ const PomodoroScreen = () => {
                             width: '100%',
                             justifyContent: 'space-between',
                         }}>
-                            <TextComponent text={selectedTask.title} style={Fonts.h3} color={Colors.black} />
+                            <TextComponent text={selectedTask.title} style={Fonts.h3} color={colors.text} />
                             <TouchableOpacity onPress={handleClose}>
-                                <Icons.close size={24} color={Colors.black} />
+                                <Icons.close size={24} color={colors.text} />
                             </TouchableOpacity>
                         </View>
                     ) : (

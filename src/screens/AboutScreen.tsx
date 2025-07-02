@@ -33,7 +33,7 @@ const AboutScreen = () => {
 
                 <View style={{ marginTop: Sizes.padding * 5 }}>
                     {data.map((item, index) => (
-                        <View key={index} style={[styles.itemContainer, { backgroundColor: colors.surface }]}>
+                        <View key={index} style={[styles.itemContainer, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
                             <TouchableOpacity
                                 style={styles.itemContent}
                                 onPress={() => {
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     itemContainer: {
         margin: Sizes.padding,
         paddingHorizontal: Sizes.padding,
-        borderRadius: Sizes.radius
+        borderRadius: Sizes.radius,
+        borderWidth: 1
     }
 })

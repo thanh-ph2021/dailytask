@@ -5,7 +5,7 @@ import { NavigationProp } from '@react-navigation/native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useTranslation } from 'react-i18next'
 
-import { Colors, Sizes, Fonts, Images } from '../contants'
+import { Colors, Sizes, Fonts } from '../contants'
 import { RootStackParamList } from '../navigations/MainNavigator'
 import { saveNewTask, updateTaskHandle } from '../redux/Reducers/TasksReducer'
 import { useTheme } from '../hooks'
@@ -189,16 +189,15 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
 
             <View style={{ justifyContent: 'center' }}>
                 <ScrollView
-                    style={{ marginHorizontal: Sizes.padding }}
+                    style={{ marginHorizontal: Sizes.padding*2 }}
                     showsVerticalScrollIndicator={false}
                 >
-
                     <View>
                         <TextComponent text={t('title')} style={{ ...Fonts.h3, marginVertical: Sizes.padding }} />
                         <TextInput
                             style={{
-                                borderColor: colors.textSecondary,
-                                backgroundColor: colors.background,
+                                borderColor: colors.divider,
+                                backgroundColor: colors.containerBackground,
                                 borderWidth: 1,
                                 borderRadius: Sizes.radius,
                                 paddingHorizontal: Sizes.s,
@@ -215,8 +214,8 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                         <TextComponent text={t('description')} style={{ ...Fonts.h3, marginVertical: Sizes.padding }} />
                         <TextInput
                             style={{
-                                borderColor: colors.textSecondary,
-                                backgroundColor: colors.background,
+                                borderColor: colors.divider,
+                                backgroundColor: colors.containerBackground,
                                 borderWidth: 1,
                                 borderRadius: Sizes.radius,
                                 paddingHorizontal: Sizes.s,
@@ -234,7 +233,8 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                     <View style={{
                         marginVertical: Sizes.padding,
                         borderRadius: Sizes.radius,
-                        borderColor: colors.textSecondary,
+                        borderColor: colors.divider,
+                        backgroundColor: colors.containerBackground,
                         borderWidth: 1,
                         padding: Sizes.padding
                     }}>
