@@ -37,8 +37,14 @@ const info2 = require('../assets/images/ic_info_2.png')
 const category2 = require('../assets/images/ic_category_2.png')
 const pomodoroBg = require('../assets/images/pomodoro-bg.png')
 const pomodoroBgDark = require('../assets/images/pomodoro-bg-dark.png')
+const vietcombankQR = require('../assets/images/vietcombank-qr.png')
+const momoQR = require('../assets/images/momo-qr.png')
+const vietcombank = require('../assets/images/vietcombank.png')
 
 const Images = {
+    vietcombank,
+    momoQR,
+    vietcombankQR,
     pomodoroBgDark,
     pomodoroBg,
     category2,

@@ -2,8 +2,8 @@ import { Image, Linking, StyleSheet, TouchableOpacity, View } from 'react-native
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
-import { version } from '../../package.json'
-import {  Fonts, Images, Sizes } from '../contants'
+import { version } from '../../app.json'
+import { Fonts, Images, Sizes } from '../contants'
 import { useTheme } from '../hooks'
 import { Container, Header, Icon, TextComponent, TypeIcons } from '../components'
 

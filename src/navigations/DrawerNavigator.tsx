@@ -14,7 +14,7 @@ import { Fonts, Images, Sizes } from "../contants"
 import TextComponent from "../components/TextComponent"
 import Divider from "../components/Divider"
 import CategoriesScreen from "../screens/CategoriesScreen"
-import { AboutScreen, AccountSyncScreen } from "../screens"
+import { AboutScreen, AccountSyncScreen, DonateScreen } from "../screens"
 import { getAppLanguage, getAppTheme } from "../services/AsyncStorage"
 import { setTheme } from "../redux/actions"
 import { useTheme } from "../hooks"
@@ -28,6 +28,7 @@ export type SettingStackParamList = {
   SettingsScreen: undefined,
   AccountSyncScreen: undefined,
   AboutScreen: undefined,
+  DonateScreen: undefined,
 }
 
 const Stack = createStackNavigator<SettingStackParamList>()
@@ -46,7 +47,8 @@ const SettingsNavigator = () => {
 type DrawerStackParamList = {
   Main: undefined,
   Categories: undefined,
-  Settings: undefined
+  Settings: undefined,
+  DonateScreen: undefined,
 }
 
 
@@ -132,6 +134,12 @@ const DrawerNavigator = () => {
             }
           }}
         />
+        <DrawerItem
+          label={'Donate'}
+          labelStyle={{ color: colors.textPrimary }}
+          icon={() => <Icons.Donate size={30} color={colors.textPrimary} />}
+          onPress={() => navigation.navigate('DonateScreen')}
+        />
 
       </DrawerContentScrollView>
     )
@@ -162,8 +170,15 @@ const DrawerNavigator = () => {
           swipeEnabled: false,
         }}
       />
+      <Drawer.Screen
+        name="DonateScreen"
+        component={DonateScreen}
+        options={{
+          swipeEnabled: false,
+        }}
+      />
     </Drawer.Navigator>
-  );
+  )
 }
 
 export default DrawerNavigator

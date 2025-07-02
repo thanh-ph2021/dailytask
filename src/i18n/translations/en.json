@@ -121,5 +121,12 @@
   "backingUpData": "Backing up data",
   "shareApp": "Share App",
   "feedback": "Send Feedback",
-  "shareMessage": "Check out this awesome app"
+  "shareMessage": "Check out this awesome app",
+  "donateSupport": "If you love this app, please help us maintain and improve it!",
+  "thankYou": "Thank you very much ❤️",
+  "ad_thank_you": "Thank you for donating by watching the ad!",
+  "ad_not_ready": "Ad is not ready yet",
+  "watch_ad": "Watch ad",
+  "scanMomo": "Scan Momo QR code",
+  "scanVietcombank": "Scan Vietcombank QR code"
 }

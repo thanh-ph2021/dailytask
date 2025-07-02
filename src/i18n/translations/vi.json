@@ -123,5 +123,12 @@
     "backingUpData": "Đang sao lưu dữ liệu",
     "shareApp": "Chia sẻ ứng dụng",
     "feedback": "Đóng góp ý kiến",
-    "shareMessage": "Hãy thử ngay ứng dụng tuyệt vời này!"
+    "shareMessage": "Hãy thử ngay ứng dụng tuyệt vời này!",
+    "donateSupport": "Nếu bạn yêu thích ứng dụng, hãy giúp chúng tôi duy trì và phát triển nó tốt hơn!",
+    "thankYou": "Cảm ơn bạn rất nhiều ❤️",
+    "ad_thank_you": "Cảm ơn bạn đã donate bằng cách xem quảng cáo!",
+    "ad_not_ready": "Quảng cáo chưa sẵn sàng",
+    "watch_ad": "Xem quảng cáo",
+    "scanMomo": "Quét mã Momo",
+    "scanVietcombank": "Quét mã Vietcombank"
 }
