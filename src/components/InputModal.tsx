@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Modal, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 
 import TextComponent from './TextComponent'
-import { Sizes } from '../contants'
+import { Sizes } from '../constants'
 import { useTheme } from '../hooks'
 
 type InputModalProps = {

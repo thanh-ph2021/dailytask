@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Image, StyleSheet } from "react-native"
 import { CategoryModel } from "../models"
 import UtilStyles from "../utils/UtilStyles"
 import TextComponent from "./TextComponent"
-import { Colors, Fonts, Sizes } from "../contants"
+import { Colors, Fonts, Sizes } from "../constants"
 
 type CategoryItemProps = {
     item: CategoryModel,

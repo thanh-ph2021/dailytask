@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import { useTheme } from "../hooks"
 import { Icons } from "../utils"
-import { Colors, Sizes } from "../contants"
+import { Colors, Sizes } from "../constants"
 import TextComponent from "./TextComponent"
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 
-import { Fonts, Sizes } from '../contants'
+import { Fonts, Sizes } from '../constants'
 import { useTheme } from '../hooks'
 import { Icons } from '../utils'
 import TextComponent from './TextComponent'

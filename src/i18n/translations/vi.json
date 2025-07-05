@@ -136,5 +136,10 @@
     "taskCompletedMessage": "Bạn đã hoàn thành công việc\n\"{{title}}\"",
     "taskUncompletedMessage": "Bạn đã bỏ hoàn thành công việc\n\"{{title}}\"",
     "empty": "Trống",
-    "emptyMessage": "Bạn chưa thêm công việc nào cho ngày này."
+    "emptyMessage": "Bạn chưa thêm công việc nào cho ngày này.",
+    "addCategorySuccess": "Thêm danh mục mới thành công!",
+    "deleteSuccess": "Xoá thành công!",
+    "updateSuccess": "Cập nhật thành công!",
+    "addTaskSuccess": "Thêm công việc mới thành công!",
+    "timeToWork": "Đã đến giờ làm công việc."
 }

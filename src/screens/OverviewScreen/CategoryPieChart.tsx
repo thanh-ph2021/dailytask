@@ -3,7 +3,7 @@ import { Image, TouchableOpacity, View } from 'react-native'
 import { VictoryPie } from 'victory-native'
 import { TFunction } from 'i18next'
 
-import { Colors, Fonts, Sizes } from '../../contants'
+import { Colors, Fonts, Sizes } from '../../constants'
 import { TextComponent } from '../../components'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 import { ChartClick } from '../../utils'

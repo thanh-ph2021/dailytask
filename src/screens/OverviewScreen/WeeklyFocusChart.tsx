@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { TFunction } from 'i18next'
 import { Moment } from 'moment'
 
-import { Fonts, Images, Sizes } from '../../contants'
+import { Fonts, Images, Sizes } from '../../constants'
 import { TextComponent } from '../../components'
 import { formatActualTime, WeeklyData } from '../../utils'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
@@ -28,9 +28,9 @@ const WeeklyFocusChart = ({
     onPrevWeek,
 }: Props) => {
     const maxTotal = Math.max(
-        ...Object.values(data).map((day) =>
-            day.reduce((sum, task) => sum + task.durationInSec, 0)
-        )
+        ...Object.values(data).map((day) => {
+            return day.reduce((sum, task) => sum + task.durationInSec, 0)
+        })
     )
 
     const daysOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']

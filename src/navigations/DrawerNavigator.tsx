@@ -6,11 +6,12 @@ import { createStackNavigator } from "@react-navigation/stack"
 import i18n from 'i18next'
 import { useTranslation } from "react-i18next"
 import { Image, Linking, Share, View } from "react-native"
+import notifee, { EventType } from '@notifee/react-native'
 
 import { fetchSomeTask } from "../redux/Reducers/TasksReducer"
 import SettingsScreen from "../screens/SettingsScreen"
 import MainNavigator from "./MainNavigator"
-import { Fonts, Images, Sizes } from "../contants"
+import { Fonts, Images, Sizes } from "../constants"
 import TextComponent from "../components/TextComponent"
 import Divider from "../components/Divider"
 import CategoriesScreen from "../screens/CategoriesScreen"
@@ -77,6 +78,13 @@ const DrawerNavigator = () => {
     dispatch(fetchSomeCategory)
     loadLanguage()
     loadTheme()
+
+    notifee.onBackgroundEvent(async ({ type, detail }) => {
+      if (type === EventType.PRESS) {
+        console.log('[BACKGROUND] Notification pressed:', detail.notification)
+        // Bạn có thể xử lý ở đây: ghi log, lưu AsyncStorage, gửi Redux...
+      }
+    })
   }, [])
 
   function CustomDrawerContent(props: any) {

@@ -5,7 +5,7 @@ import { NavigationProp } from '@react-navigation/native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useTranslation } from 'react-i18next'
 
-import { Colors, Sizes, Fonts } from '../contants'
+import { Colors, Sizes, Fonts } from '../constants'
 import { RootStackParamList } from '../navigations/MainNavigator'
 import { saveNewTask, updateTaskHandle } from '../redux/Reducers/TasksReducer'
 import { useTheme } from '../hooks'
@@ -46,7 +46,7 @@ type OptionItemProps = {
 const REPEAT_OPTIONS = ['none', 'daily', 'weekly', 'monthly']
 
 const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
-    const [data, setData] = useState<TaskModel>(route.params && route.params.data ? route.params.data : initData)
+    const [data, setData] = useState<TaskModel>(route.params && route.params.data ? {...route.params.data, dateTime: new Date(route.params.data.dateTime)} : initData)
     const dispatch = useDispatch<any>()
     const { t } = useTranslation()
     const { colors } = useTheme()
@@ -124,10 +124,10 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
             }
             try {
                 if (route.params) {
-                    await dispatch(updateTaskHandle(dataHandled))
+                    await dispatch(updateTaskHandle(dataHandled, t))
                     navigation.goBack()
                 } else {
-                    await dispatch(saveNewTask(dataHandled))
+                    await dispatch(saveNewTask(dataHandled, t))
                 }
                 setData(initData)
             } catch (error) {
@@ -141,8 +141,6 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
     const onClose = () => {
         setAlert({ ...alert, visible: false })
     }
-
-
 
     const OptionItem = ({ Icon, label, ValueComponent, onPress }: OptionItemProps) => (
         <TouchableOpacity style={styles.row} onPress={onPress}>
@@ -221,9 +219,10 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
                                 paddingHorizontal: Sizes.s,
                                 color: colors.textPrimary,
                                 textAlignVertical: 'top',
+                                height: 100
                             }}
                             multiline
-                            numberOfLines={6}
+                            numberOfLines={20}
                             value={data.description}
                             onChangeText={(text) => setDataHandle('description', text)}
                             placeholder={`${t('description')} ...`}

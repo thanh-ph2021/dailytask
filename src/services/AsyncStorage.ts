@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
+
 import { TaskModel } from "../models/TaskModel"
 import DefaultCategories, { NUMBER_DEFAULT_CATEGORIES } from "../data/DefaultCategories"
 import { CategoryModel } from "../models"

@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native'
 import { TFunction } from 'i18next'
 
 import { Divider, TextComponent } from '../../components'
-import { Sizes, Fonts, Colors } from '../../contants'
+import { Sizes, Fonts, Colors } from '../../constants'
 import { Icons } from '../../utils'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 
@@ -13,9 +13,10 @@ interface Props {
     onCancel: () => void
     colors: ThemeColor
     t: TFunction<"translation", undefined>
+    onClose: () => void
 }
 
-const TimerModePicker = ({ timerMode, onConfirm, onCancel, colors, t }: Props) => {
+const TimerModePicker = ({ timerMode, onConfirm, onCancel, colors, t, onClose }: Props) => {
     const [selectedMode, setSelectedMode] = useState<'countdown' | 'countup'>(timerMode)
 
     useEffect(() => {
@@ -24,8 +25,7 @@ const TimerModePicker = ({ timerMode, onConfirm, onCancel, colors, t }: Props) =
 
     return (
         <View>
-            <TextComponent text={t('timerMode')} style={{ ...Fonts.h2, marginBottom: Sizes.padding }} />
-            <Divider color={colors.textSecondary} height={0.3} />
+            <TextComponent text={t('timerMode')} style={{ ...Fonts.h2, paddingBottom: Sizes.s, borderBottomWidth: 1, borderColor: colors.divider }} />
             {[
                 ['countdown',
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: Sizes.padding }}>
@@ -63,8 +63,7 @@ const TimerModePicker = ({ timerMode, onConfirm, onCancel, colors, t }: Props) =
                     {selectedMode === mode && <Icons.tickCircle color={colors.primary} size={30} />}
                 </TouchableOpacity>
             ))}
-            <View style={{ position: 'absolute', bottom: -90, left: 0, right: 0 }}>
-                <Divider color={colors.textSecondary} height={0.5} />
+            <View style={{ borderTopWidth: 1, borderColor: colors.divider, marginTop: Sizes.padding, paddingTop: Sizes.padding }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity
                         onPress={onCancel}

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { View, TouchableOpacity, ImageBackground, InteractionManager, ActivityIndicator } from 'react-native'
+import { View, TouchableOpacity, ImageBackground, InteractionManager, ActivityIndicator, Modal } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import { Colors, FOCUS_DURATION, Fonts, Images, Sizes } from '../../contants'
+import { Colors, FOCUS_DURATION, Fonts, Images, Sizes } from '../../constants'
 import { usePomodoroTimer, useTheme } from '../../hooks'
 import { completeTaskPomodoroHandle } from '../../redux/Reducers/TasksReducer'
 import { makeSelectPendingTasksFilter } from '../../redux/selectors'
@@ -22,26 +22,20 @@ const PomodoroScreen = () => {
     const { colors, isDark } = useTheme()
     const dispatch = useDispatch<any>()
     const data = useSelector(makeSelectPendingTasksFilter(new Date()))
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
     const [selectedTask, setSelectedTask] = useState<TaskModel | null>(null)
     const [alert, setAlert] = useState({ visible: false, type: 'warning' as const, description: '' })
     const [bottomSheetMode, setBottomSheetMode] = useState<'task' | 'timer' | 'info'>('task')
     const [timerMode, setTimerMode] = useState<'countdown' | 'countup'>('countdown')
-    const [shouldOpenSheet, setShouldOpenSheet] = useState(false)
+
     const [isCompleting, setIsCompleting] = useState(false)
     const [startAt, setStartAt] = useState<Date | null>(null)
 
     const openSheetWithMode = (mode: 'task' | 'timer' | 'info') => {
         setBottomSheetMode(mode)
-        setShouldOpenSheet(true)
+        setIsModalVisible(true)
     }
-
-    useEffect(() => {
-        if (shouldOpenSheet) {
-            bottomSheetRef.current?.snapTo(0)
-            setShouldOpenSheet(false)
-        }
-    }, [shouldOpenSheet])
 
     const {
         isRunning,
@@ -76,7 +70,7 @@ const PomodoroScreen = () => {
                 ? sessionCount * FOCUS_DURATION + (FOCUS_DURATION - secondsLeft)
                 : secondsLeft,
             startAt: startAt!
-        }))
+        }, t))
         showNotification(t('taskCompleted', { something: selectedTask.title }), Icons.success, 4000)
         resetTimer()
         setSelectedTask(null)
@@ -111,39 +105,54 @@ const PomodoroScreen = () => {
         }
     }
 
+    const renderTaskSelector = () => (
+        <TaskSelector
+            data={data}
+            onSelect={(task) => {
+                setIsModalVisible(false)
+                InteractionManager.runAfterInteractions(() => setSelectedTask(task));
+            }}
+            colors={colors}
+            t={t}
+            onClose={() => setIsModalVisible(false)}
+        />
+    )
+
+    const renderPomodoroInfo = () => (
+        <PomodoroInfo colors={colors} t={t} onClose={() => setIsModalVisible(false)}/>
+    )
+
+    const renderTimerModePicker = () => (
+        <TimerModePicker
+            timerMode={timerMode}
+            onCancel={() => setIsModalVisible(false)}
+            onConfirm={(newTimerMode) => {
+                setIsModalVisible(false)
+                InteractionManager.runAfterInteractions(() => {
+                    setTimerMode(newTimerMode);
+                    setSecondsLeft(newTimerMode === 'countdown' ? FOCUS_DURATION : 0);
+                    setIsRunning(false)
+                });
+            }}
+            colors={colors}
+            t={t}
+            onClose={() => setIsModalVisible(false)}
+        />
+    )
+
     const renderBottomSheetContent = () => {
-        if (bottomSheetMode === 'task') {
-            return <TaskSelector
-                data={data}
-                onSelect={(task) => {
-                    bottomSheetRef.current?.close()
-
-                    InteractionManager.runAfterInteractions(() => {
-                        setSelectedTask(task)
-                    })
-                }}
-                colors={colors}
-                t={t}
-            />
-        } else if (bottomSheetMode === 'info') {
-            return <PomodoroInfo colors={colors} t={t} />
-        }
         return (
-            <TimerModePicker
-                timerMode={timerMode}
-                onCancel={() => bottomSheetRef.current?.close()}
-                onConfirm={(newTimerMode) => {
-                    bottomSheetRef.current?.close()
-
-                    InteractionManager.runAfterInteractions(() => {
-                        setTimerMode(newTimerMode)
-                        setSecondsLeft(newTimerMode === 'countdown' ? FOCUS_DURATION : 0)
-                        setIsRunning(false)
-                    })
-                }}
-                colors={colors}
-                t={t}
-            />
+            <View>
+                <View style={{ display: bottomSheetMode === 'task' ? 'flex' : 'none' }}>
+                    {renderTaskSelector()}
+                </View>
+                <View style={{ display: bottomSheetMode === 'info' ? 'flex' : 'none' }}>
+                    {renderPomodoroInfo()}
+                </View>
+                <View style={{ display: bottomSheetMode === 'timer' ? 'flex' : 'none' }}>
+                    {renderTimerModePicker()}
+                </View>
+            </View>
         )
     }
 
@@ -189,7 +198,6 @@ const PomodoroScreen = () => {
                             placeholder={t('selectTask')}
                             onPress={() => {
                                 openSheetWithMode('task')
-
                             }}
                         />
                     )}
@@ -264,18 +272,29 @@ const PomodoroScreen = () => {
                 </TouchableOpacity>
             </ImageBackground>
 
-            <AppBottomSheet
-                ref={bottomSheetRef}
-                enableDynamicSizing
-                snapPoints={[Sizes.height * 0.45, Sizes.height]}
-                backgroundStyle={{ backgroundColor: colors.containerBackground }}
-                handleIndicatorStyle={{ backgroundColor: colors.text, opacity: 0.3 }}
+            <Modal
+                animationType="slide"
+                visible={isModalVisible}
+                transparent
+                onRequestClose={() => setIsModalVisible(false)}
             >
-                <View style={{ height: '100%', gap: Sizes.padding, marginHorizontal: Sizes.padding }}>
-                    {renderBottomSheetContent()}
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'flex-end',
+                    backgroundColor: 'rgba(0,0,0,0.4)'
+                }}>
+                    <View style={{
+                        backgroundColor: colors.containerBackground,
+                        borderTopLeftRadius: 16,
+                        borderTopRightRadius: 16,
+                        padding: Sizes.padding * 1.5,
+                        maxHeight: '90%'
+                    }}>
+                        {renderBottomSheetContent()}
+                    </View>
                 </View>
-            </AppBottomSheet>
-
+            </Modal>
+            
             <AlertModal
                 type={'warning'}
                 description={alert.description}

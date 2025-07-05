@@ -3,11 +3,11 @@ import BottomSheet, { BottomSheetBackdrop, BottomSheetProps, BottomSheetView } f
 import { Portal } from '@gorhom/portal'
 
 interface AppBottomSheetProps extends BottomSheetProps {
-    snapPoints: (`${number}%` | number)[],
+    snapPoints?: (`${number}%` | number)[],
     children: ReactNode
 }
 
-const AppBottomSheet = forwardRef(({ snapPoints = ['50%'], children, ...restProps }: AppBottomSheetProps, ref) => {
+const AppBottomSheet = forwardRef(({ snapPoints= ['100%'], children, ...restProps }: AppBottomSheetProps, ref) => {
 
     const portalName = useMemo(() => `bottom-sheet-${Math.random()}`, [])
     const sheetRef = useRef<BottomSheet>(null)
@@ -18,7 +18,8 @@ const AppBottomSheet = forwardRef(({ snapPoints = ['50%'], children, ...restProp
             snapTo: (value: any, isPosition = false) => {
                 if (isPosition) {
                     sheetRef.current?.snapToPosition?.(value)
-                } else {
+                } 
+                else {
                     if (value >= 0 && value <= snapPoints.length - 1) {
                         sheetRef.current?.snapToIndex?.(value)
                     }

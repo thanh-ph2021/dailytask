@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import TextComponent from './TextComponent'
 import UtilStyles from '../utils/UtilStyles'
-import { Fonts } from '../contants'
+import { Fonts } from '../constants'
 import Divider from './Divider'
 import { useTheme } from '../hooks'
 

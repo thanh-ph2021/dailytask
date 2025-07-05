@@ -2,7 +2,7 @@ import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
 import TextComponent from './TextComponent'
-import { Colors, Sizes } from '../contants'
+import { Colors, Sizes } from '../constants'
 import { useTheme } from '../hooks'
 
 type Props = {

@@ -4,7 +4,7 @@ import { NavigationProp } from '@react-navigation/native'
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
 
-import { Colors, Fonts, Sizes } from "../contants"
+import { Colors, Fonts, Sizes } from "../constants"
 import { selectTheme } from "../redux/selectors"
 import { setTheme } from "../redux/actions"
 import { SettingStackParamList } from "../navigations/DrawerNavigator"

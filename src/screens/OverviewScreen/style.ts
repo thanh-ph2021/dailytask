@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { Sizes } from "../../contants"
+import { Sizes } from "../../constants"
 
 export const styles = StyleSheet.create({
     row: {

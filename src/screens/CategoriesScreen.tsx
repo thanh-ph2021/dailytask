@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Colors, Fonts, Images, Sizes } from "../contants"
+import { Colors, Fonts, Images, Sizes } from "../constants"
 import { NUMBER_DEFAULT_CATEGORIES } from "../data/DefaultCategories"
 import UtilStyles from "../utils/UtilStyles"
 import { useTheme } from "../hooks"
@@ -63,9 +63,9 @@ const CategoriesScreen = () => {
     const handleAdd = () => {
         if (category.text !== 'New category') {
             if (isEditing) {
-                dispatch(updateCategoryHandle(category))
+                dispatch(updateCategoryHandle(category, t))
             } else {
-                dispatch(saveNewCategory(category))
+                dispatch(saveNewCategory(category, t))
             }
             bottomSheetRef.current.close()
         }
@@ -197,7 +197,7 @@ const CategoriesScreen = () => {
                                     visible: true,
                                     description: 'areYouSureDelCate',
                                     type: 'warning',
-                                    onOk: () => dispatch(deleteCategoryHandle(visibleSelectV2.value))
+                                    onOk: () => dispatch(deleteCategoryHandle(visibleSelectV2.value, t))
                                 })
                                 break
                         }

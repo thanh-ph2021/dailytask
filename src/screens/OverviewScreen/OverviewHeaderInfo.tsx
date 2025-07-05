@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { TFunction } from 'i18next'
 
-import { Sizes } from '../../contants'
+import { Sizes } from '../../constants'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 import DataCard from './DataCard'
 import { styles } from './style'

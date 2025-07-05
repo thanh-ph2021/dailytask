@@ -1,30 +1,28 @@
-import { Platform, Text, TouchableOpacity, View } from "react-native"
-import { Notifier } from "react-native-notifier"
+import { Platform, TouchableOpacity } from "react-native"
 import Svg from "react-native-svg"
 import RNFS from 'react-native-fs'
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { format, isSameDay, subDays } from "date-fns"
 import { Moment } from "moment"
 import moment from "moment"
+import Toast from 'react-native-toast-message'
 
-import { Colors, Sizes, Fonts } from "../contants"
+import { Colors } from "../constants"
 import { CategoryModel, TaskModel } from "../models"
 import { saveLastSyncTime } from "../services/AsyncStorage"
 import { GoogleDrive } from "../apis/GoogleDrive"
 export { default as Icons } from './Icons'
 
-export const showNotification = (title: string, Icon: () => React.ReactElement, duration?: number) => {
-    Notifier.showNotification({
-        duration: duration ?? 2000,
-        title: title,
-        Component: (props) => {
-            return (
-                <View style={{ flexDirection: 'row', backgroundColor: Colors.white, padding: Sizes.s, marginHorizontal: Sizes.s, marginVertical: Sizes.xxl, borderRadius: Sizes.s, elevation: 5 }}>
-                    <Icon />
-                    <Text style={{ ...Fonts.body3, color: Colors.black, paddingLeft: Sizes.l }}>{props.title}</Text>
-                </View>
-            )
-        }
+export const showNotification = (title: string, Icon: () => React.ReactElement, duration?: number, textColor?: string, backgroundColor?: string) => {
+    Toast.show({
+        type: 'default',
+        visibilityTime: duration ?? 3000,
+        props: {
+            title: title,
+            Icon: Icon,
+            textColor,
+            backgroundColor
+        },
     })
 }
 

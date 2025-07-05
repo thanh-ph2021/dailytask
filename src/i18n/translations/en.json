@@ -135,5 +135,10 @@
   "taskCompletedMessage": "You have completed the task\n\"{{title}}\"",
   "taskUncompletedMessage": "You have marked the task as incomplete\n\"{{title}}\"",
   "empty": "Empty",
-  "emptyMessage": "You have not added a task for this date."
+  "emptyMessage": "You have not added a task for this date.",
+  "addCategorySuccess": "Add new category done!",
+  "deleteSuccess": "Delete done!",
+  "updateSuccess": "Update done!",
+  "addTaskSuccess": "Add new task done!",
+  "timeToWork": "It's time to do your task."
 }

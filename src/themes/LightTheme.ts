@@ -1,4 +1,4 @@
-import { Colors } from "../contants"
+import { Colors } from "../constants"
 import { ThemeData } from "../redux/Reducers/ThemeReducer"
 
 const LightTheme: ThemeData = {

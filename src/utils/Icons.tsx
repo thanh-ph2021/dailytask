@@ -1,6 +1,7 @@
-import Svg, { Circle, Defs, G, Image, Path, Pattern, Rect, Use } from "react-native-svg";
-import Icon, { TypeIcons } from "../components/Icon";
-import { Colors, Sizes } from "../contants";
+import Svg, { Circle, Defs, G, Image, Path, Pattern, Rect, Use } from "react-native-svg"
+
+import Icon, { TypeIcons } from "../components/Icon"
+import { Colors, Sizes } from "../constants"
 
 type Props = {
     color?: string,

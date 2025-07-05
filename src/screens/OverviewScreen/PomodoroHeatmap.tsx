@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { TFunction } from 'i18next'
 
 import { TextComponent } from '../../components'
-import { Fonts, Sizes } from '../../contants'
+import { Fonts, Sizes } from '../../constants'
 import { HeatmapData, HOURS } from '../../utils'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 

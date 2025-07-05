@@ -2,7 +2,6 @@ import EncryptedStorage from 'react-native-encrypted-storage'
 
 const saveUserData = async (data: string) => {
      await EncryptedStorage.setItem('userData', data)
-    
 }
 
 const getUserData = async () => {

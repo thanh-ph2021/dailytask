@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from 'react-native'
 import { BottomTabBarProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { DrawerActions } from '@react-navigation/native'
 
-import { Colors } from '../contants'
+import { Colors } from '../constants'
 import { useTheme } from '../hooks'
 import { PomodoroScreen, HomeScreen, OverviewScreen } from '../screens'
 import { Icons } from '../utils'

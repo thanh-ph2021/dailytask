@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
 import { version } from '../../app.json'
-import { Fonts, Images, Sizes } from '../contants'
+import { Fonts, Images, Sizes } from '../constants'
 import { useTheme } from '../hooks'
 import { Container, Header, Icon, TextComponent, TypeIcons } from '../components'
 

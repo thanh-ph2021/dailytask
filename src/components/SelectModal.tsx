@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import TextComponent from './TextComponent'
 import UtilStyles from '../utils/UtilStyles'
-import { Colors, Fonts, Images, Sizes } from '../contants'
+import { Colors, Fonts, Images, Sizes } from '../constants'
 import Divider from './Divider'
 import { useTheme } from '../hooks'
 import { selectCategories } from '../redux/selectors'

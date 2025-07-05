@@ -1,10 +1,10 @@
 import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Swipeable } from 'react-native-gesture-handler'
+import Swipeable, { SwipeableMethods } from 'react-native-gesture-handler/ReanimatedSwipeable'
 import { useTranslation } from 'react-i18next'
 
 import TextComponent from '../TextComponent'
-import { Colors, Fonts, Sizes } from '../../contants'
+import { Colors, Fonts, Sizes } from '../../constants'
 import { formatActualTime, formatHourMinute24h, Icons } from '../../utils'
 import { useTheme } from '../../hooks'
 import { TaskModel } from '../../models'
@@ -20,19 +20,30 @@ type Props = {
 
 const TaskCard2 = ({ task, onSelect, onEdit, onDelete, onComplete, hideAction }: Props) => {
     const { colors } = useTheme()
-    const {t} = useTranslation()
+    const { t } = useTranslation()
+    const swipeableRef = React.useRef<SwipeableMethods>(null)
 
     const renderRightActions = () => (
         <View style={{ flexDirection: 'row', gap: Sizes.padding / 2, marginLeft: Sizes.padding / 2 }}>
             <TouchableOpacity
-                onPress={() => onEdit && onEdit(task)}
+                onPress={() => {
+                    onEdit && onEdit(task)
+                    if (swipeableRef.current) {
+                        swipeableRef.current.close()
+                    }
+                }}
                 style={[styles.buttonAction, { backgroundColor: Colors.blue }]}
             >
                 <Icons.Edit color="white" size={20} />
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => onDelete && onDelete(task)}
+                onPress={() => {
+                    onDelete && onDelete(task)
+                    if (swipeableRef.current) {
+                        swipeableRef.current.close()
+                    }
+                }}
                 style={[styles.buttonAction, { backgroundColor: Colors.lightRed2 }]}
             >
                 <Icons.Trash color="white" size={20} />
@@ -41,21 +52,24 @@ const TaskCard2 = ({ task, onSelect, onEdit, onDelete, onComplete, hideAction }:
     )
     const renderLeftActions = () => (
         <View style={[styles.buttonAction, { backgroundColor: colors.accent, width: 120 }]}>
-            <TextComponent text={t(task.completed ? 'reopenTask' : 'completed')} style={Fonts.body3}/>
+            <TextComponent text={t(task.completed ? 'reopenTask' : 'completed')} style={Fonts.body3} />
         </View>
     )
 
     return (
         <Swipeable
-            renderRightActions={renderRightActions}
+            renderRightActions={task.completed ? undefined : renderRightActions}
             renderLeftActions={renderLeftActions}
-            onSwipeableOpen={(direction, swipeable) => {
-                if (direction === 'left') {
-                    swipeable.close()
+            onSwipeableOpen={(direction) => {
+                if (direction === 'right') {
+                    if (swipeableRef.current) {
+                        swipeableRef.current.close()
+                    }
                     onComplete && onComplete(task)
                 }
             }}
-            enabled={hideAction}>
+            ref={swipeableRef}
+            enabled={!hideAction}>
             <TouchableOpacity
                 style={{
                     backgroundColor: colors.containerBackground,

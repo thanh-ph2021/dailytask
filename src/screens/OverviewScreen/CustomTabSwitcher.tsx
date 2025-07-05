@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { TFunction } from 'i18next'
 
-import { Colors, Fonts, Sizes } from '../../contants'
+import { Colors, Fonts, Sizes } from '../../constants'
 import { TextComponent } from '../../components'
 
 type TabType = 'Pomodoro' | 'Tasks'

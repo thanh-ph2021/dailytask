@@ -3,10 +3,10 @@ import { Image, Modal, StyleSheet, TouchableOpacity, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
 
-// import DonateAdButton from "./DonateAdButton"
+import DonateAdButton from "./DonateAdButton"
 import { Container, Header, Icon, TextComponent, TypeIcons } from "../../components"
 import { useTheme } from "../../hooks"
-import { Fonts, Images, Sizes } from "../../contants"
+import { Fonts, Images, Sizes } from "../../constants"
 import { Icons } from "../../utils"
 
 const DonateScreen = () => {
@@ -65,7 +65,7 @@ const DonateScreen = () => {
                     <Icons.arrowRight2 color={colors.text} size={24} />
                 </TouchableOpacity>
             </View>
-            {/* <DonateAdButton /> */}
+            <DonateAdButton />
             <Modal visible={visible} transparent animationType="fade">
                 <View style={styles.modalOverlay}>
                     <View style={[styles.modalContent, { backgroundColor: colors.containerBackground }]}>

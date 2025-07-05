@@ -1,20 +1,26 @@
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { TFunction } from 'i18next'
 
 import { TextComponent } from '../../components'
-import { Fonts, Sizes } from '../../contants'
+import { Fonts, Sizes } from '../../constants'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
+import { Icons } from '../../utils'
 
-const PomodoroInfo = ({ colors, t }: { colors: ThemeColor, t: TFunction<"translation", undefined> }) => {
+const PomodoroInfo = ({ colors, t, onClose }: { colors: ThemeColor, t: TFunction<"translation", undefined>, onClose: () => void }) => {
   return (
-    <View style={{ gap: Sizes.padding }}>
-      <TextComponent
-        text={t("pomodoroTitle")}
-        style={Fonts.h2}
-        color={colors.text}
-      />
-
+    <View style={{ gap: Sizes.padding, paddingBottom: Sizes.padding }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <TextComponent
+          text={t("pomodoroTitle")}
+          style={{ ...Fonts.h2, width: "80%" }}
+          color={colors.text}
+        />
+        <TouchableOpacity onPress={onClose}>
+          <Icons.close size={30} color={colors.text} />
+        </TouchableOpacity>
+      </View>
+      
       <TextComponent
         text={t("pomodoroIntro")}
         style={Fonts.body3}

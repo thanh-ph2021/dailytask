@@ -8,10 +8,11 @@ import {
     View,
 } from 'react-native'
 
-import { Sizes, Fonts, Colors } from '../../contants'
+import { Sizes, Fonts, Colors } from '../../constants'
 import { addDaysToDate } from '../../utils'
 import { useTheme } from '../../hooks'
 import TextComponent from '../TextComponent'
+import { useTranslation } from 'react-i18next'
 
 type TabsType = {
     date: Date
@@ -39,7 +40,8 @@ const Tabs = ({ date: selectedDate, onPress, style }: TabsType) => {
     const listRef = useRef<FlatList>(null)
     const selectedDateAtInit = useRef<Date>(selectedDate)
     const { colors } = useTheme()
-
+    const { t } = useTranslation()
+    
     useEffect(() => {
         const initialDays = generateDays(selectedDateAtInit.current, PRELOAD_WEEKS)
         setDays(initialDays)
@@ -97,10 +99,11 @@ const Tabs = ({ date: selectedDate, onPress, style }: TabsType) => {
 
     const renderItem = ({ item }: { item: Date }) => {
         const isSelected = item.toDateString() === selectedDate.toDateString()
-        const dayName = item.toLocaleDateString('en-US', { weekday: 'short' })
         const dayNumber = item.getDate()
         const today = new Date()
         const isToday = item.toDateString() === today.toDateString()
+        const dayNameRaw = item.toLocaleDateString('en-US', { weekday: 'long' })
+        const dayName = t(dayNameRaw.toLowerCase()).substring(0, 3)
 
         return (
             <TouchableOpacity

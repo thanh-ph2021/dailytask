@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { FOCUS_DURATION, SHORT_BREAK_DURATION, LONG_BREAK_DURATION } from '../contants'
+import { FOCUS_DURATION, SHORT_BREAK_DURATION, LONG_BREAK_DURATION } from '../constants'
 
 type Mode = 'focus' | 'short-break' | 'long-break'
 type TimerMode = 'countdown' | 'countup'

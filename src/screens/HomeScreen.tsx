@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import { makeSelectTasksFilter } from '../redux/selectors'
-import { Colors, Fonts, Images, Sizes } from '../contants'
+import { Colors, Fonts, Images, Sizes } from '../constants'
 import Tabs from '../components/Home/Tabs'
 import { useTheme } from '../hooks'
 import { AlertModal, Container, Divider, Header, TaskCard2, TextComponent } from '../components'
@@ -70,7 +70,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     }
 
     const onEditHandle = (task: TaskModel) => {
-        navigation.navigate('AddTask', { data: task })
+        navigation.navigate('AddTask', { data: {...task, dateTime: task.dateTime.toISOString()} })
     }
 
     const onDeleteHandle = (task: TaskModel) => {
@@ -78,12 +78,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             visible: true,
             description: 'areYouSureDelTask',
             type: 'warning',
-            onOk: () => dispatch(deleteTaskHandle(task.id!)),
+            onOk: () => dispatch(deleteTaskHandle(task.id!, t)),
         })
     }
 
     const onCompletedHandle = async (task: TaskModel) => {
-        await dispatch(completeTaskHandle(task.id!))
+        await dispatch(completeTaskHandle(task.id!, t))
         showNotification(!task.completed
             ? t('taskCompletedMessage', { title: task.title })
             : t('taskUncompletedMessage', { title: task.title })

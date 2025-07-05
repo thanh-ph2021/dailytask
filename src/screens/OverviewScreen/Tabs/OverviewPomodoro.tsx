@@ -6,7 +6,7 @@ import moment from "moment"
 
 import { Container, SelectModalv2 } from "../../../components"
 import DataCard from "../DataCard"
-import { Sizes } from "../../../contants"
+import { Sizes } from "../../../constants"
 import { styles } from "../style"
 import { makeSelectCompletedPomodoroTasks, makeSelectCompletedTasksLast7Days, selectCategories, selectPomodoroStreak, selectTotalFocusTimeThisMonth, selectTotalFocusTimeThisWeek, selectTotalFocusTimeToday } from "../../../redux/selectors"
 import { formatActualTime, groupTasksByDay, transformTasksToHeatmapData } from "../../../utils"

@@ -3,9 +3,9 @@ import { View } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 import { TFunction } from 'i18next'
 
-import { Sizes } from '../../contants'
+import { Sizes } from '../../constants'
 import { TextComponent } from '../../components'
-import { Fonts } from '../../contants'
+import { Fonts } from '../../constants'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 
 interface TimerDisplayProps {

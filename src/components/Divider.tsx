@@ -1,6 +1,6 @@
 import { StyleProp, View, ViewStyle } from "react-native"
 
-import { Colors, Sizes } from "../contants"
+import { Colors, Sizes } from "../constants"
 
 interface Props {
     height?: number,

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
 import { TaskModel } from '../../models/TaskModel'
-import { Colors, Fonts, Images, Sizes } from '../../contants'
+import { Colors, Fonts, Images, Sizes } from '../../constants'
 import Icon, { TypeIcons } from '../Icon'
 import { completeTaskHandle, deleteTaskHandle, updateTaskHandle } from '../../redux/Reducers/TasksReducer'
 import AlertModal from '../AlertModal'

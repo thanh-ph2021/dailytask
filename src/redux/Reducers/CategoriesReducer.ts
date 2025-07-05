@@ -1,7 +1,7 @@
 import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
 
-import { CategoryModel } from "../../models"
+import { CategoryModel, StateModel } from "../../models"
 import { getCategories, saveCategories } from "../../services/AsyncStorage"
 import { Icons, showNotification } from "../../utils"
 import {
@@ -9,6 +9,9 @@ import {
     deleteCategory, FETCH_CATEGORIES, fetchCategories, UPDATE_CUSTOM_CATEGORY,
     updateCategory
 } from "../actions"
+import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
+
 
 const initialState: CategoryModel[] = []
 
@@ -42,7 +45,7 @@ export const fetchSomeCategory = (dispatch: any) => {
     })
 }
 
-export const saveNewCategory = (data: CategoryModel) => async (dispatch: any, getState: any) => {
+export const saveNewCategory = (data: CategoryModel, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
         const state = getState()
         const id = nanoid()
@@ -50,7 +53,7 @@ export const saveNewCategory = (data: CategoryModel) => async (dispatch: any, ge
 
         await saveCategories([...state.categories, category])
 
-        showNotification('Add new category done!', Icons.success)
+        showNotification(t('addCategorySuccess'), Icons.success)
 
         dispatch(addCategory(category))
     } catch (error) {
@@ -58,13 +61,13 @@ export const saveNewCategory = (data: CategoryModel) => async (dispatch: any, ge
     }
 }
 
-export const deleteCategoryHandle = (id: string) => async (dispatch: any, getState: any) => {
+export const deleteCategoryHandle = (id: string, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
         const state = getState()
         const categories = [...state.categories].filter(item => item.id != id)
         await saveCategories(categories)
 
-        showNotification('Delete done!', Icons.success)
+        showNotification(t('deleteSuccess'), Icons.success)
 
         dispatch(deleteCategory(id))
     } catch (error) {
@@ -72,7 +75,7 @@ export const deleteCategoryHandle = (id: string) => async (dispatch: any, getSta
     }
 }
 
-export const updateCategoryHandle = (data: CategoryModel) => async (dispatch: any, getState: any) => {
+export const updateCategoryHandle = (data: CategoryModel, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
         const state = getState()
         const categories = [...state.categories].map(cate => {
@@ -84,7 +87,7 @@ export const updateCategoryHandle = (data: CategoryModel) => async (dispatch: an
         await saveCategories(categories)
 
         dispatch(updateCategory(data))
-        showNotification('Update done!', Icons.success)
+        showNotification(t('updateSuccess'), Icons.success)
     } catch (error) {
         console.log("🚀 ~ updateCategoryHandle ~ error:", error)
     }

@@ -7,7 +7,7 @@ import { GoogleSignin, SignInResponse, User } from '@react-native-google-signin/
 import moment from 'moment'
 
 import { selectCategories, selectTasks, selectTheme } from '../redux/selectors'
-import { Fonts, Sizes } from '../contants'
+import { Fonts, Sizes } from '../constants'
 import { getUserData, removeUserData, saveUserData } from '../services/EncryptedStorage '
 import { Icons, saveDataToFile, showNotification } from '../utils'
 import { GoogleDrive } from '../apis/GoogleDrive'

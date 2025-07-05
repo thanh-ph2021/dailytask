@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { View, StyleSheet, TextStyle } from 'react-native'
 import { useSelector } from 'react-redux'
 
-import { Fonts, Sizes } from '../contants'
+import { Fonts, Sizes } from '../constants'
 import TextComponent from './TextComponent'
 import { StateModel } from '../models/StateModel'
 import { selectTheme } from '../redux/selectors'

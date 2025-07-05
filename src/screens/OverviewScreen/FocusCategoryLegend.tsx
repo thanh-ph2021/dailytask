@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from "react-native"
 import { TextComponent } from "../../components"
 import { formatActualTime } from "../../utils"
 import { FocusCategoryData } from "./FocusCategoryChart"
-import { Colors, Fonts, Sizes } from "../../contants"
+import { Colors, Fonts, Sizes } from "../../constants"
 
 type FocusCategoryLegendProps = {
   data: FocusCategoryData[]

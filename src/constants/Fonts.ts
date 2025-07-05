@@ -1,4 +1,4 @@
-import Sizes from "./Sizes";
+import Sizes from "./Sizes"
 
 const Fonts = {
     time: { fontFamily: "Roboto-Bold", fontSize: 48, lineHeight: 50},

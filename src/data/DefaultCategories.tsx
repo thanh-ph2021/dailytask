@@ -1,4 +1,4 @@
-import { Images } from "../contants"
+import { Images } from "../constants"
 import { CategoryModel } from "../models"
 
 const DefaultCategories: CategoryModel[] = [

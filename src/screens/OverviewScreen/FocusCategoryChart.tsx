@@ -5,7 +5,7 @@ import { VictoryPie } from 'victory-native'
 import { TFunction } from 'i18next'
 
 import { formatActualTime } from '../../utils'
-import { Fonts, Sizes } from '../../contants'
+import { Fonts, Sizes } from '../../constants'
 import { TextComponent } from '../../components'
 import { FocusCategoryLegend } from './FocusCategoryLegend'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'

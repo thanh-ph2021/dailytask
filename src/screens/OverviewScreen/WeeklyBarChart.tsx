@@ -4,7 +4,7 @@ import { VictoryAxis, VictoryBar, VictoryChart } from 'victory-native'
 import moment, { Moment } from 'moment'
 import { TFunction } from 'i18next'
 
-import { Fonts, Images, Sizes } from '../../contants'
+import { Fonts, Images, Sizes } from '../../constants'
 import { TextComponent } from '../../components'
 import { ThemeColor } from '../../redux/Reducers/ThemeReducer'
 import { TaskModel } from '../../models'
@@ -30,11 +30,11 @@ const WeeklyBarChart: React.FC<BarChartProps> = ({
   onNextWeek
 }) => {
   const chartDataBar = Array(7)
-    .fill(0)
-    .map((_, i) => ({
-      x: i + 1,
-      y: weeklyTasks.filter(task => moment(task.dateTime).isoWeekday() === i + 1).length,
-    }))
+  .fill(0)
+  .map((_, i) => ({
+    x: i + 1,
+    y: weeklyTasks.filter(task => moment(task.dateTime).isoWeekday() === i + 1).length,
+  }))
 
   return (
     <View style={{

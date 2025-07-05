@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import TextComponent from "./TextComponent"
 import Icon, { TypeIcons } from "./Icon"
-import { Colors, Sizes } from "../contants"
+import { Colors, Sizes } from "../constants"
 
 type AppRadioProps = {
     options: string[]

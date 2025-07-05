@@ -1,4 +1,3 @@
-import PushNotification from "react-native-push-notification"
 import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
 import moment from "moment"
@@ -6,8 +5,10 @@ import moment from "moment"
 import { TaskModel } from "../../models/TaskModel"
 import { addTaskStorage, getTaskStorage } from "../../services/AsyncStorage"
 import { ADD_TASK, DELETE_TASK, COMPLETE_TASK, FETCH_TASKS, addTask, fetchTasks, UPDATE_TASK, updateTask, deleteTask, completeTask, ASYNC_TASKS, asyncTasks, COMPLETE_TASK_POMODORO, completeTaskPomodoro } from "../actions"
-import { Colors } from "../../contants"
 import { Icons, showNotification } from "../../utils"
+import { cancelNotification, scheduleNotification } from '../../services/NotificationService'
+import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 
 const initialState: TaskModel[] = []
 
@@ -79,33 +80,23 @@ const TasksReducer = (state: TaskModel[] = initialState, actions: any) => {
 export default TasksReducer
 
 
-export const saveNewTask = (data: TaskModel) => async (dispatch: any, getState: any) => {
+export const saveNewTask = (data: TaskModel, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
         const state = getState()
         const id = nanoid()
         const task = { ...data, id: id }
 
         if (data.isAlert) {
-            PushNotification.localNotificationSchedule({
+            scheduleNotification({
+                id: id,
+                title: t('timeToWork'),
+                body: `${data.title}\n${data.description}`,
                 date: data.dateTime,
-
-                title: data.title,
-                message: data.description,
-
-                channelId: 'alert-channel-id-test',
-                autoCancel: true,
-                largeIcon: '',
-                color: Colors.primary,
-                showWhen: true,
-                when: data.dateTime.getTime(),
-                id: id.toString(),
-                // userInfo: {title: 'abc'},
-                allowWhileIdle: true
             })
         }
         await addTaskStorage([...state.tasks, task])
 
-        showNotification('Add new task done!', Icons.success)
+        showNotification(t('addTaskSuccess'), Icons.success)
 
         await dispatch(addTask(task))
     } catch (error) {
@@ -113,26 +104,17 @@ export const saveNewTask = (data: TaskModel) => async (dispatch: any, getState: 
     }
 }
 
-export const updateTaskHandle = (data: TaskModel) => async (dispatch: any, getState: any) => {
+export const updateTaskHandle = (data: TaskModel, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
-        PushNotification.cancelLocalNotification(data.id!.toString())
-        if (data.isAlert) {
-            PushNotification.localNotificationSchedule({
+        if (data.isAlert && !data.completed) {
+            scheduleNotification({
+                id: data.id!,
+                title: t('timeToWork'),
+                body: `${data.title}\n${data.description}`,
                 date: data.dateTime,
-
-                title: data.title,
-                message: data.description,
-
-                channelId: 'alert-channel-id-test',
-                autoCancel: true,
-                largeIcon: '',
-                color: Colors.primary,
-                showWhen: true,
-                when: data.dateTime.getTime(),
-                id: data.id!.toString(),
-                // userInfo: {title: 'abc'},
-                allowWhileIdle: true
             })
+        } else {
+            cancelNotification(data.id!.toString())
         }
         const state = getState()
         const tasks = [...state.tasks].map(task => {
@@ -144,31 +126,29 @@ export const updateTaskHandle = (data: TaskModel) => async (dispatch: any, getSt
         await addTaskStorage(tasks)
 
         dispatch(updateTask(data))
-        showNotification('Update done!', Icons.success)
+        showNotification(t('updateSuccess'), Icons.success)
     } catch (error) {
         console.log("🚀 ~ saveNewTask ~ error:", error)
     }
 }
 
-export const deleteTaskHandle = (id: string) => async (dispatch: any, getState: any) => {
+export const deleteTaskHandle = (id: string, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
-        PushNotification.cancelLocalNotification(id.toString())
+        cancelNotification(id.toString())
         const state = getState()
         const tasks = [...state.tasks].filter(item => item.id != id)
         await addTaskStorage(tasks)
 
         dispatch(deleteTask(id))
 
-        showNotification('Delete done!', Icons.success)
+        showNotification(t('deleteSuccess'), Icons.success)
     } catch (error) {
         console.log("🚀 ~ saveNewTask ~ error:", error)
     }
 }
 
-export const completeTaskHandle = (id: string) => async (dispatch: any, getState: any) => {
+export const completeTaskHandle = (id: string, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
-        PushNotification.cancelLocalNotification(id.toString())
-
         const state = getState()
         const tasks = [...state.tasks]
 
@@ -198,38 +178,26 @@ export const completeTaskHandle = (id: string) => async (dispatch: any, getState
                 }
 
                 // Tạo thông báo nếu cần
-                if (newRepeatTask.isAlert && nextDate > new Date()) {
-                    PushNotification.localNotificationSchedule({
-                        date: nextDate,
-                        title: newRepeatTask.title,
-                        message: newRepeatTask.description,
-                        channelId: 'alert-channel-id-test',
-                        autoCancel: true,
-                        largeIcon: '',
-                        color: Colors.primary,
-                        showWhen: true,
-                        when: nextDate.getTime(),
+                if (newRepeatTask.isAlert) {
+                    scheduleNotification({
                         id: newRepeatTask.id.toString(),
-                        allowWhileIdle: true,
+                        title: t('timeToWork'),
+                        body: `${newRepeatTask.title}\n${newRepeatTask.description}`,
+                        date: newRepeatTask.dateTime,
                     })
                 }
             }
 
             // Nếu task ban đầu có thông báo và đang chuyển sang completed → lập lại thông báo
             if (task.isAlert && !isCompleted && dateTime > new Date()) {
-                PushNotification.localNotificationSchedule({
-                    date: dateTime,
-                    title: task.title,
-                    message: task.description,
-                    channelId: 'alert-channel-id-test',
-                    autoCancel: true,
-                    largeIcon: '',
-                    color: Colors.primary,
-                    showWhen: true,
-                    when: dateTime.getTime(),
+                scheduleNotification({
                     id: task.id.toString(),
-                    allowWhileIdle: true,
+                    title: t('timeToWork'),
+                    body: `${task.title}\n${task.description}`,
+                    date: dateTime,
                 })
+            } else {
+                cancelNotification(id.toString())
             }
 
             return {
@@ -251,9 +219,8 @@ export const completeTaskHandle = (id: string) => async (dispatch: any, getState
     }
 }
 
-export const completeTaskPomodoroHandle = (selectedTask: TaskModel) => async (dispatch: any, getState: any) => {
+export const completeTaskPomodoroHandle = (selectedTask: TaskModel, t: TFunction) => async (dispatch: any, getState: any) => {
     try {
-        PushNotification.cancelLocalNotification(selectedTask.id!.toString())
         const state = getState()
 
         let newRepeatTask = null
@@ -280,20 +247,15 @@ export const completeTaskPomodoroHandle = (selectedTask: TaskModel) => async (di
                     dateTime: nextDate,
                 }
 
-                if (newRepeatTask.isAlert && nextDate > new Date()) {
-                    PushNotification.localNotificationSchedule({
-                        date: nextDate,
-                        title: newRepeatTask.title,
-                        message: newRepeatTask.description,
-                        channelId: 'alert-channel-id-test',
-                        autoCancel: true,
-                        largeIcon: '',
-                        color: Colors.primary,
-                        showWhen: true,
-                        when: nextDate.getTime(),
+                if (newRepeatTask.isAlert) {
+                    scheduleNotification({
                         id: newRepeatTask.id.toString(),
-                        allowWhileIdle: true,
+                        title: t('timeToWork'),
+                        body: `${newRepeatTask.title}\n${newRepeatTask.description}`,
+                        date: nextDate,
                     })
+                } else {
+                    cancelNotification(selectedTask.id!.toString())
                 }
             }
 

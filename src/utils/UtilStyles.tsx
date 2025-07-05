@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
-import { Sizes } from "../contants";
+import { StyleSheet } from "react-native"
+
+import { Sizes } from "../constants"
 
 const UtilStyles = StyleSheet.create({
     icon: {
