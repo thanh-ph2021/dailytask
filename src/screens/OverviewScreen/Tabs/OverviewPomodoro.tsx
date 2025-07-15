@@ -24,7 +24,7 @@ const OverviewPomodoro = () => {
     const totalFocusTimeToday = useSelector(selectTotalFocusTimeToday)
     const totalFocusTimeThisWeek = useSelector(selectTotalFocusTimeThisWeek)
     const totalFocusTimeThisMonth = useSelector(selectTotalFocusTimeThisMonth)
-    const steakOfDays = useSelector(selectPomodoroStreak)
+    const {streak, isStreakingToday} = useSelector(selectPomodoroStreak)
 
     const completedTasksLast7Days = useSelector(makeSelectCompletedTasksLast7Days())
     const heatmapData = transformTasksToHeatmapData(completedTasksLast7Days)
@@ -84,7 +84,7 @@ const OverviewPomodoro = () => {
                         <DataCard value={formatActualTime(totalFocusTimeThisWeek)} label={t('focusTimeThisWeek')} />
                     </View>
                     <View style={styles.row}>
-                        <DataCard value={steakOfDays.toString()} label={t('streakOfDays')} colorValue="#FF981F" />
+                        <DataCard value={streak.toString()} label={t('streakOfDays')} colorValue={isStreakingToday ? "#FF981F" : colors.primary} />
                         <DataCard value={formatActualTime(totalFocusTimeThisMonth)} label={t('focusTimeThisMonth')} />
                     </View>
                 </View>
