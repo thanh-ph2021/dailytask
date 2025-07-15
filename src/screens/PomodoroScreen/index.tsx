@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, TouchableOpacity, ImageBackground, InteractionManager, ActivityIndicator, Modal } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +8,7 @@ import { usePomodoroTimer, useTheme } from '../../hooks'
 import { completeTaskPomodoroHandle } from '../../redux/Reducers/TasksReducer'
 import { makeSelectPendingTasksFilter } from '../../redux/selectors'
 import { Icons, showNotification } from '../../utils'
-import { Container, Header, AlertModal, AppBottomSheet, TextComponent } from '../../components'
+import { Container, Header, AlertModal, TextComponent } from '../../components'
 import TimerDisplay from './TimerDisplay'
 import TaskSelector from './TaskSelector'
 import TimerModePicker from './TimerModePicker'
@@ -49,10 +49,12 @@ const PomodoroScreen = () => {
         setMode,
         resetTimer,
         handleSessionComplete,
-        totalDuration
+        totalDuration,
+        startSession,
+        pauseSession,
+        resumeSession,
+        handleSkipBreak
     } = usePomodoroTimer(timerMode)
-
-    const bottomSheetRef = useRef<any>(null)
 
     useEffect(() => {
         if (!isSessionDone) return
@@ -76,12 +78,6 @@ const PomodoroScreen = () => {
         setSelectedTask(null)
         setIsCompleting(false)
         setStartAt(null)
-    }
-
-    const handleSkipBreak = () => {
-        setMode('focus')
-        setSecondsLeft(FOCUS_DURATION)
-        setIsRunning(false)
     }
 
     const handleClose = () => {
@@ -222,12 +218,12 @@ const PomodoroScreen = () => {
                                 <TextComponent text={t('skipBreak')} style={Fonts.h3} color={Colors.primary} />
                             </TouchableOpacity>
                         ) : (
-                            <TouchableOpacity style={[styles.startButton, { backgroundColor: colors.primary }]} onPress={() => setIsRunning(true)}>
+                            <TouchableOpacity style={[styles.startButton, { backgroundColor: colors.primary }]} onPress={startSession}>
                                 <TextComponent text={t('startBreak')} style={Fonts.h3} color={Colors.white} />
                             </TouchableOpacity>
                         )
                     ) : isRunning ? (
-                        <TouchableOpacity style={[styles.startButton, { borderWidth: 1, borderColor: colors.primary }]} onPress={() => setIsRunning(false)}>
+                        <TouchableOpacity style={[styles.startButton, { borderWidth: 1, borderColor: colors.primary }]} onPress={pauseSession}>
                             <TextComponent text={t('pause')} style={Fonts.h3} color={colors.primary} />
                         </TouchableOpacity>
                     ) : (timerMode === 'countdown' ? secondsLeft !== totalDuration : secondsLeft > 0) ? (
@@ -243,7 +239,7 @@ const PomodoroScreen = () => {
                                     <TextComponent text={t('complete')} style={Fonts.h3} color={Colors.white} textAlign='center' />
                                 )}
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.startButton, { width: '40%', backgroundColor: colors.primary }]} onPress={() => setIsRunning(true)}>
+                            <TouchableOpacity style={[styles.startButton, { width: '40%', backgroundColor: colors.primary }]} onPress={resumeSession}>
                                 <TextComponent text={t('continue')} style={Fonts.h3} color={Colors.white} textAlign='center' />
                             </TouchableOpacity>
                         </View>
@@ -252,7 +248,7 @@ const PomodoroScreen = () => {
                             style={[styles.startButton, { flexDirection: 'row', gap: Sizes.padding, backgroundColor: !selectedTask ? Colors.gray : colors.primary }]}
                             onPress={() => {
                                 if (!startAt) setStartAt(new Date())
-                                setIsRunning(true)
+                                startSession()
                             }}
                             disabled={!selectedTask}
                         >

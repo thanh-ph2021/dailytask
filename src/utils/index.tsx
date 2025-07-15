@@ -91,7 +91,7 @@ export const formatActualTime = (seconds: number): string => {
     let result = ''
     if (hrs > 0) result += `${hrs}h `
     if (mins > 0) result += `${mins}m `
-    if (secs > 0 || result === '') result += `${secs}s`
+    if ((secs > 0 || result === '') && hrs == 0) result += `${secs}s`
 
     return result.trim()
 }

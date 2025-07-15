@@ -6,3 +6,5 @@ export {default as Fonts} from './Fonts'
 export const FOCUS_DURATION = 25 * 60
 export const SHORT_BREAK_DURATION = 5 * 60
 export const LONG_BREAK_DURATION = 15 * 60
+
+export type Mode = 'focus' | 'short-break' | 'long-break'

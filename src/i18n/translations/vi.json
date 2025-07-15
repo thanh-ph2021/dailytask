@@ -141,5 +141,9 @@
     "deleteSuccess": "Xoá thành công!",
     "updateSuccess": "Cập nhật thành công!",
     "addTaskSuccess": "Thêm công việc mới thành công!",
-    "timeToWork": "Đã đến giờ làm công việc."
+    "timeToWork": "Đã đến giờ làm công việc.",
+    "focusSessionEnded": "⏰ Hết phiên tập trung!",
+    "breakSessionEnded": "☕ Hết giờ nghỉ ngơi!",
+    "timeToRest": "Bạn có thể nghỉ ngơi một chút.",
+    "timeToWork2": "Đã đến lúc quay lại công việc rồi!"
 }

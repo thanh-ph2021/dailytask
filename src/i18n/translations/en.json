@@ -140,5 +140,9 @@
   "deleteSuccess": "Delete done!",
   "updateSuccess": "Update done!",
   "addTaskSuccess": "Add new task done!",
-  "timeToWork": "It's time to do your task."
+  "timeToWork": "It's time to do your task.",
+  "focusSessionEnded": "⏰ Focus session ended!",
+  "breakSessionEnded": "☕ Break time ended!",
+  "timeToRest": "You can take a short rest.",
+  "timeToWork2": "Time to get back to work!"
 }
