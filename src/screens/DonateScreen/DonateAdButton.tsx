@@ -5,7 +5,7 @@ import {
     TestIds,
 } from 'react-native-google-mobile-ads'
 import { useEffect, useState } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../hooks'
@@ -21,6 +21,7 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
 
 export default function DonateAdButton() {
     const [loaded, setLoaded] = useState(false)
+    const [isShowing, setIsShowing] = useState(false)
     const { t } = useTranslation()
     const { colors } = useTheme()
 
@@ -33,13 +34,14 @@ export default function DonateAdButton() {
         const unsubscribeEarned = rewarded.addAdEventListener(
             RewardedAdEventType.EARNED_REWARD,
             (reward) => {
-                showNotification(t('ad_thank_you'), () => <Icons.success />)
+                showNotification(t('ad_thank_you'), () => <Icons.success />, 10000)
             }
         )
 
         const unsubscribeClosed = rewarded.addAdEventListener(
             AdEventType.CLOSED,
             () => {
+                setIsShowing(false)
                 setLoaded(false)
                 rewarded.load()
             }
@@ -55,7 +57,8 @@ export default function DonateAdButton() {
     }, [])
 
     const showAd = () => {
-        if (loaded) {
+        if (loaded && !isShowing) {
+            setIsShowing(true)
             rewarded.show()
             setLoaded(false)
         } else {
@@ -68,12 +71,13 @@ export default function DonateAdButton() {
             <TouchableOpacity
                 style={styles.rowItem}
                 onPress={showAd}
+                disabled={!loaded || isShowing}
             >
                 <View style={styles.rowLeftContainer}>
                     <View style={[styles.iconContainer,]}>
                         <Icons.AdMob size={24} />
                     </View>
-                    <TextComponent text={t('watch_ad')} style={Fonts.body3} />
+                    {!loaded || isShowing ? <ActivityIndicator color={colors.primary} size={'small'} /> : <TextComponent text={t('watch_ad')} style={Fonts.body3} />}
                 </View>
                 <Icons.arrowRight2 color={colors.text} size={24} />
             </TouchableOpacity>
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     sectionContainer: {
         justifyContent: 'center',
         marginHorizontal: Sizes.padding,
-        padding: Sizes.padding/2,
+        padding: Sizes.padding / 2,
         marginTop: Sizes.l,
         borderRadius: Sizes.l,
         borderWidth: 1
