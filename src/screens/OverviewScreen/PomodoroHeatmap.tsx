@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import { TFunction } from 'i18next'
 
 import { TextComponent } from '../../components'
@@ -18,7 +18,7 @@ const CELL_HEIGHT = 40
 
 const PomodoroHeatmap = ({ data, t, colors }: Props) => {
   return (
-    <View style={[styles.container, {backgroundColor: colors.containerBackground, borderColor: colors.divider}]}>
+    <View style={[styles.container, { backgroundColor: colors.containerBackground, borderColor: colors.divider }]}>
       <TextComponent text={t('pomodoroHeatmap')} style={{ ...Fonts.h3, marginBottom: Sizes.padding }} />
       <ScrollView>
         <ScrollView horizontal>
@@ -26,7 +26,7 @@ const PomodoroHeatmap = ({ data, t, colors }: Props) => {
             <View style={styles.headerRow}>
               <TextComponent text={''} style={{ width: 60 }} />
               {HOURS.map((hour) => (
-                <Text key={hour} style={styles.hourLabel}>{`${hour}:00`}</Text>
+                <TextComponent key={hour} text={`${hour}:00`} style={styles.hourLabel} />
               ))}
             </View>
 
@@ -35,24 +35,24 @@ const PomodoroHeatmap = ({ data, t, colors }: Props) => {
                 <TextComponent text={t(day)} style={{ width: 60 }} numberOfLines={1} canExpand={false} />
                 {HOURS.map((hour) => {
                   const cell = hourMap[hour]
-                  const count = cell?.count || 0
-                  const color = cell?.color || '#ccc'
 
                   return (
                     <View key={hour} style={styles.cell}>
-                      {Array(count)
-                        .fill(0)
-                        .map((_, i) => (
-                          <View
-                            key={i}
-                            style={[
-                              styles.pomodoroBar,
-                              {
-                                backgroundColor: color,
-                              },
-                            ]}
-                          />
-                        ))}
+                      {cell?.items?.map((item, i) =>
+                        Array(item.count)
+                          .fill(0)
+                          .map((_, j) => (
+                            <View
+                              key={`${i}-${j}`}
+                              style={[
+                                styles.pomodoroBar,
+                                {
+                                  backgroundColor: item.color,
+                                },
+                              ]}
+                            />
+                          ))
+                      ) || null}
                     </View>
                   )
                 })}
@@ -91,13 +91,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
-  },
-  dayLabel: {
-    width: 90,
-    fontSize: 14,
-    marginRight: 6,
-    fontWeight: '500',
-    color: '#333',
   },
   cell: {
     width: CELL_WIDTH,

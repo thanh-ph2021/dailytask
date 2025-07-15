@@ -83,7 +83,7 @@ export const handleAsyncData = async (data: BackupDataModel) => {
 }
 
 export const formatActualTime = (seconds: number): string => {
-    if(seconds === 0) return '0'
+    if (seconds === 0) return '0'
     const hrs = Math.floor(seconds / 3600)
     const mins = Math.floor((seconds % 3600) / 60)
     const secs = seconds % 60
@@ -130,62 +130,70 @@ export const isThisMonth = (dateStr: string) => {
     )
 }
 
-type CellData = {
-  count: number
-  color: string
-}
+type CellData = { items: { count: number, color: string }[] }
 
 export type HourMap = Record<number, CellData>
 export type HeatmapData = Record<string, HourMap>
 
 export const HOURS = [...Array.from({ length: 24 - 8 }, (_, i) => i + 8), ...Array.from({ length: 8 }, (_, i) => i)]
 
+const getDateLabel = (date: Date, now: Date) => {
+    if (isSameDay(date, now)) return 'today'
+    if (isSameDay(date, subDays(now, 1))) return 'yesterday'
+    return format(date, 'MMM dd')
+}
+
 export const transformTasksToHeatmapData = (tasks: TaskModel[]): HeatmapData => {
-  const now = new Date()
-  const data: HeatmapData = {}
+    const now = new Date()
+    const data: HeatmapData = {}
 
-  for (let i = 6; i >= 0; i--) {
-    const date = subDays(now, i)
-    const label = isSameDay(date, now)
-      ? 'today'
-      : isSameDay(date, subDays(now, 1))
-        ? 'yesterday'
-        : format(date, 'MMM dd')
+    for (let i = 6; i >= 0; i--) {
+        const date = subDays(now, i)
+        const label = getDateLabel(date, now)
 
-    data[label] = {}
-  }
-
-  tasks.forEach(task => {
-    if (!task.startAt || !task.category?.color || !task.actualFocusTimeInSec) return
-
-    const dateObj = typeof task.startAt === 'string' ? new Date(task.startAt) : task.startAt
-    let label = format(dateObj, 'MMM dd')
-    if (isSameDay(dateObj, now)) label = 'Today'
-    else if (isSameDay(dateObj, subDays(now, 1))) label = 'Yesterday'
-
-    const hour = new Date(dateObj).getHours()
-    const roundedHour = Math.floor(hour / 2) * 2
-
-    // Tính số session (mỗi 25 phút = 1500 giây)
-    const SESSION_LENGTH = 1500 // 25 phút
-    const sessionCount = Math.floor(task.actualFocusTimeInSec / SESSION_LENGTH)
-    if (sessionCount < 1) return // bỏ qua nếu chưa đủ 1 session
-
-    if (!data[label]) data[label] = {}
-    if (!data[label][roundedHour]) {
-      data[label][roundedHour] = { count: sessionCount, color: task.category.color }
-    } else {
-      data[label][roundedHour].count += sessionCount
+        data[label] = {}
     }
-  })
 
-  return data
+    tasks.forEach(task => {
+        if (!task.startAt || !task.category?.color || !task.actualFocusTimeInSec) return
+
+        const dateObj = typeof task.startAt === 'string' ? new Date(task.startAt) : task.startAt
+        let label = getDateLabel(dateObj, now)
+
+        const hour = dateObj.getHours()
+        const roundedHour = Math.floor(hour / 2) * 2
+
+        // Tính số session (mỗi 25 phút = 1500 giây)
+        const SESSION_LENGTH = 1500 // 25 phút
+        const sessionCount = Math.floor(task.actualFocusTimeInSec / SESSION_LENGTH)
+        if (sessionCount < 1) return // bỏ qua nếu chưa đủ 1 session
+
+        if (!data[label]) data[label] = {}
+        if (!data[label][roundedHour]) {
+            data[label][roundedHour] = {
+                items: [{ count: sessionCount, color: task.category.color }]
+            }
+        } else {
+            const items = data[label][roundedHour].items
+
+            // Tìm xem đã có cùng màu chưa
+            const existing = items.find(i => i.color === task.category!.color)
+
+            if (existing) {
+                existing.count += sessionCount
+            } else {
+                items.push({ count: sessionCount, color: task.category.color })
+            }
+        }
+    })
+
+    return data
 }
 
 export type FocusDayData = {
-  label: string
-  durationInSec: number
-  color: string
+    label: string
+    durationInSec: number
+    color: string
 }
 export type WeeklyData = Record<string, FocusDayData[]>
 
@@ -206,7 +214,7 @@ export const groupTasksByDay = (tasks: TaskModel[], startOfWeek: Moment, endOfWe
             grouped[dayKey].push({
                 label: task.title,
                 durationInSec: task.actualFocusTimeInSec ?? 0,
-                color: isToday ? Colors.accent : Colors.primary 
+                color: isToday ? Colors.accent : Colors.primary
             })
         }
     })
@@ -215,8 +223,8 @@ export const groupTasksByDay = (tasks: TaskModel[], startOfWeek: Moment, endOfWe
 }
 
 export function formatHourMinute24h(isoString: string): string {
-  const date = new Date(isoString)
-  const hours = date.getHours().toString().padStart(2, '0')
-  const minutes = date.getMinutes().toString().padStart(2, '0')
-  return `${hours}:${minutes}`
+    const date = new Date(isoString)
+    const hours = date.getHours().toString().padStart(2, '0')
+    const minutes = date.getMinutes().toString().padStart(2, '0')
+    return `${hours}:${minutes}`
 }
