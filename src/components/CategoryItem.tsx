@@ -19,7 +19,7 @@ const CategoryItem = ({ item, onPress, onLongPress }: CategoryItemProps) => {
             </View>
             <View style={{ alignItems: 'center' }}>
                 <TextComponent text={item.text} />
-                {item.id !== '-1' && <TextComponent text={`0 entries`} style={styles.textNumTries} />}
+                {/* {item.id !== '-1' && <TextComponent text={`0 entries`} style={styles.textNumTries} />} */}
             </View>
         </TouchableOpacity>
     )

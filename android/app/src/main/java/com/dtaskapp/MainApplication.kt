@@ -10,6 +10,8 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 
+import com.otahotupdate.OtaHotUpdate
+
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost =
@@ -21,6 +23,10 @@ class MainApplication : Application(), ReactApplication {
             }
 
         override fun getJSMainModuleName(): String = "index"
+
+        override fun getJSBundleFile(): String? {
+          return OtaHotUpdate.bundleJS(this@MainApplication)
+        }
 
         override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 

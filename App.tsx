@@ -11,8 +11,11 @@ import { store } from "./src/redux/store"
 import DrawerNavigator from "./src/navigations/DrawerNavigator"
 import { requestNotificationPermission, setupNotificationChannel } from "./src/services/NotificationService"
 import { toastConfig } from "./src/utils/toast"
+import { useCheckVersion } from "./src/hooks/useCheckVersion"
 
 function App() {
+  const { version } = useCheckVersion()
+
   useEffect(() => {
     SplashScreen.hide()
 
@@ -20,7 +23,10 @@ function App() {
       await setupNotificationChannel()
       await requestNotificationPermission()
     }
+
     initNotification()
+
+    version.onCheckVersionSilently()
   }, [])
 
   return (
@@ -28,10 +34,10 @@ function App() {
       <Provider store={store}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PortalProvider>
-              <NavigationContainer>
-                <DrawerNavigator />
-                <Toast config={toastConfig}/>
-              </NavigationContainer>
+            <NavigationContainer>
+              <DrawerNavigator />
+              <Toast config={toastConfig} />
+            </NavigationContainer>
           </PortalProvider>
         </GestureHandlerRootView>
       </Provider>

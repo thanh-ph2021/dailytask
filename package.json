@@ -10,7 +10,9 @@
     "test": "jest",
     "android:runRelease": "yarn android --variant release",
     "android:releaseBundle": "cd android && gradlew bundleRelease && cd ..",
-    "android:releaseApk": "cd android && gradlew assembleRelease && cd .."
+    "android:releaseApk": "cd android && gradlew assembleRelease && cd ..",
+    "export-android": "scripts\\export-android.cmd",
+    "compress-archive": "scripts\\compress-archive.cmd"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.1.6",
@@ -34,7 +36,9 @@
     "react-i18next": "^15.5.3",
     "react-native": "0.80.1",
     "react-native-asset": "^2.1.1",
+    "react-native-blob-util": "^0.22.2",
     "react-native-circular-progress": "^1.4.1",
+    "react-native-config": "^1.5.5",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.27.1",
@@ -42,6 +46,7 @@
     "react-native-google-mobile-ads": "^15.4.0",
     "react-native-mmkv": "^3.3.0",
     "react-native-modal-datetime-picker": "^18.0.0",
+    "react-native-ota-hot-update": "^2.3.0",
     "react-native-reanimated": "^3.18.0",
     "react-native-safe-area-context": "^5.5.1",
     "react-native-screens": "^4.11.1",
