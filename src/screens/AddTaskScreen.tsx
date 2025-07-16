@@ -60,7 +60,7 @@ const AddTaskScreen = ({ navigation, route }: AddTaskScreenProps) => {
     const categories = useSelector((state: StateModel) => selectCategories(state))
     const [category, setCategory] = useState(route.params && route.params.data && route.params.data.category ? route.params.data.category : categories[0])
     const [visibleSelect, setVisibleSelect] = useState(false)
-    const [selectedRepeat, setSelectedRepeat] = useState<(typeof REPEAT_OPTIONS)[number]>('none')
+    const [selectedRepeat, setSelectedRepeat] = useState<(typeof REPEAT_OPTIONS)[number]>(route.params && route.params.data && route.params.data.repeat ? route.params.data.repeat : 'none')
     const [loading, setLoading] = useState(false)
 
     const showDatePicker = () => {
