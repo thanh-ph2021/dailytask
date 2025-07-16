@@ -25,6 +25,7 @@ const OverviewPomodoro = () => {
     const totalFocusTimeThisWeek = useSelector(selectTotalFocusTimeThisWeek)
     const totalFocusTimeThisMonth = useSelector(selectTotalFocusTimeThisMonth)
     const {streak, isStreakingToday} = useSelector(selectPomodoroStreak)
+    const categories = useSelector((state: StateModel) => selectCategories(state))
 
     const completedTasksLast7Days = useSelector(makeSelectCompletedTasksLast7Days())
     const heatmapData = transformTasksToHeatmapData(completedTasksLast7Days)
@@ -37,11 +38,10 @@ const OverviewPomodoro = () => {
             moment(task.dateTime).isBetween(startOfWeek, endOfWeek, 'day', '[]')
         )
     }, [completedPomodoroTasks, startOfWeek, endOfWeek])
-    const weekData = groupTasksByDay(data, startOfWeek, endOfWeek)
+    const weekData = groupTasksByDay(data, startOfWeek, endOfWeek, categories)
 
     const [visibleSelect, setVisibleSelect] = useState(false)
     const [selectedOption, setSelectedOption] = useState<(typeof DATA_OPTIONS)[number]>('thisWeek')
-    const categories = useSelector((state: StateModel) => selectCategories(state))
     const filteredCompletedPomodoroTasks = useMemo(() => {
         const data = [...completedPomodoroTasks]
 

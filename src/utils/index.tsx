@@ -193,28 +193,46 @@ export const transformTasksToHeatmapData = (tasks: TaskModel[]): HeatmapData => 
 export type FocusDayData = {
     label: string
     durationInSec: number
-    color: string
+    color: string,
 }
-export type WeeklyData = Record<string, FocusDayData[]>
+export type WeeklyData = Record<string, {
+    isToday: boolean
+    data: FocusDayData[]
+}>
 
-export const groupTasksByDay = (tasks: TaskModel[], startOfWeek: Moment, endOfWeek: Moment): WeeklyData => {
+export const groupTasksByDay = (tasks: TaskModel[], startOfWeek: Moment, endOfWeek: Moment, categories: CategoryModel[]): WeeklyData => {
+
     const grouped: WeeklyData = {}
 
+    const categoryMap: Record<string, CategoryModel> = categories.reduce((map, category) => {
+        map[category.id] = category
+        return map
+    }, {} as Record<string, CategoryModel>)
+
+    const today = moment().startOf('day')
+
     for (let i = 0; i < 7; i++) {
-        const day = startOfWeek.clone().add(i, 'days').format('dddd').toLowerCase()
-        grouped[day] = []
+        const date = startOfWeek.clone().add(i, 'days').startOf('day')
+        const day = date.format('dddd').toLowerCase()
+        const isToday = date.isSame(today, 'day')
+
+        grouped[day] = {
+            isToday,
+            data: []
+        }
     }
 
     tasks.forEach(task => {
         const taskDate = moment(task.startAt)
         if (taskDate.isBetween(startOfWeek, endOfWeek, 'day', '[]')) {
             const dayKey = taskDate.format('dddd').toLowerCase()
-            const isToday = moment().isSame(taskDate, 'day')
 
-            grouped[dayKey].push({
+            const categoryColor = categoryMap[task.categoryId!]?.color
+
+            grouped[dayKey]?.data.push({
                 label: task.title,
                 durationInSec: task.actualFocusTimeInSec ?? 0,
-                color: isToday ? Colors.accent : Colors.primary
+                color: categoryColor,
             })
         }
     })

@@ -28,9 +28,9 @@ const WeeklyFocusChart = ({
     onPrevWeek,
 }: Props) => {
     const maxTotal = Math.max(
-        ...Object.values(data).map((day) => {
-            return day.reduce((sum, task) => sum + task.durationInSec, 0)
-        })
+        ...Object.values(data).map((day) =>
+            day.data.reduce((sum, task) => sum + task.durationInSec, 0)
+        )
     )
 
     const daysOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
@@ -57,14 +57,15 @@ const WeeklyFocusChart = ({
             </View>
 
             {daysOrder.map((dayKey) => {
-                const tasks = data[dayKey] || []
+                const day = data[dayKey]
+                const tasks = day?.data || []
                 const total = tasks.reduce((sum, t) => sum + t.durationInSec, 0)
 
                 return (
                     <View key={dayKey} style={styles.item}>
                         <View style={styles.row}>
-                            <TextComponent text={t(dayKey)} />
-                            <TextComponent text={formatActualTime(total)} style={Fonts.h3} />
+                            <TextComponent text={t(dayKey)} color={day?.isToday ? colors.accent : colors.text}/>
+                            <TextComponent text={formatActualTime(total)} style={Fonts.h3}/>
                         </View>
                         <View style={[styles.barBackground, { backgroundColor: colors.divider }]}>
                             <View
