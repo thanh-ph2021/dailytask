@@ -70,7 +70,7 @@ const TaskCard = ({
             visible: true,
             description: 'areYouSureDelTask',
             type: 'warning',
-            onOk: () => dispatch(deleteTaskHandle(data.id!))
+            onOk: () => dispatch(deleteTaskHandle(data.id!, t))
         })
     }
 
@@ -86,7 +86,7 @@ const TaskCard = ({
             onOk: () => dispatch(updateTaskHandle({
                 ...data,
                 isAlert: !data.isAlert
-            }))
+            }, t))
         })
     }
 
@@ -171,7 +171,7 @@ const TaskCard = ({
                             backgroundColor: data.completed ? Colors.white : Colors.primary, width: 50, height: 50, borderRadius: 100, elevation: 6, alignItems: 'center',
                             justifyContent: 'center'
                         }}
-                        onPress={() => dispatch(completeTaskHandle(data.id!))}
+                        onPress={() => dispatch(completeTaskHandle(data.id!, t))}
                     >
                         {data.completed ? <Image source={Images.flower} style={UtilStyles.icon} />
                             : <Image source={Images.nut} style={UtilStyles.icon} />}

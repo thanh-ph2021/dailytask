@@ -1,7 +1,7 @@
 {
   "name": "DTaskApp",
   "displayName": "DailyTask",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-1981952654375968~9554773388",
     "ios_app_id": "ca-app-pub-1981952654375968~9554773388"

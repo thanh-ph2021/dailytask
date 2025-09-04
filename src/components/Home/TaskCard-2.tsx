@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Swipeable, { SwipeableMethods } from 'react-native-gesture-handler/ReanimatedSwipeable'
 import { useTranslation } from 'react-i18next'
+import Animated, { interpolate, SharedValue, useAnimatedStyle } from 'react-native-reanimated'
 
 import TextComponent from '../TextComponent'
 import { Colors, Fonts, Sizes } from '../../constants'
@@ -50,11 +51,36 @@ const TaskCard2 = ({ task, onSelect, onEdit, onDelete, onComplete, hideAction }:
             </TouchableOpacity>
         </View>
     )
-    const renderLeftActions = () => (
-        <View style={[styles.buttonAction, { backgroundColor: colors.accent, width: 120 }]}>
-            <TextComponent text={t(task.completed ? 'reopenTask' : 'completed')} style={Fonts.body3} />
-        </View>
-    )
+
+    const renderLeftActions = (progress: SharedValue<number>) => {
+        const animatedStyle = useAnimatedStyle(() => {
+            const scale = interpolate(
+                progress.value,
+                [0, 1],
+                [0.3, 1],
+                'clamp'
+            )
+
+            return {
+                transform: [{ scale }],
+            }
+        })
+
+        return (
+            <Animated.View
+                style={[
+                    styles.buttonAction,
+                    { backgroundColor: colors.accent, width: 120 },
+                    animatedStyle
+                ]}
+            >
+                <TextComponent
+                    text={t(task.completed ? 'reopenTask' : 'completed')}
+                    style={Fonts.body3}
+                />
+            </Animated.View>
+        )
+    }
 
     return (
         <Swipeable
@@ -68,6 +94,7 @@ const TaskCard2 = ({ task, onSelect, onEdit, onDelete, onComplete, hideAction }:
                     onComplete && onComplete(task)
                 }
             }}
+            friction={2}
             ref={swipeableRef}
             enabled={!hideAction}>
             <TouchableOpacity

@@ -210,9 +210,10 @@ export const completeTaskHandle = (id: string, t: TFunction) => async (dispatch:
 
         dispatch(completeTask(id))
 
-        if (newRepeatTask) {
-            dispatch(addTask(newRepeatTask))
-        }
+        if (newRepeatTask) dispatch(addTask(newRepeatTask))
+
+        const latestTasks = getState().tasks
+        await addTaskStorage(latestTasks)
 
     } catch (error) {
         console.log("🚀 ~ completeTaskHandle error:", error)
@@ -273,6 +274,9 @@ export const completeTaskPomodoroHandle = (selectedTask: TaskModel, t: TFunction
         if (newRepeatTask) {
             dispatch(addTask(newRepeatTask))
         }
+
+        const latestTasks = getState().tasks
+        await addTaskStorage(latestTasks)
     } catch (error) {
         console.log("🚀 ~ saveNewTask ~ error:", error)
     }

@@ -7,7 +7,7 @@ import { Moment } from "moment"
 import moment from "moment"
 import Toast from 'react-native-toast-message'
 
-import { Colors } from "../constants"
+import { Colors, FOCUS_DURATION } from "../constants"
 import { CategoryModel, TaskModel } from "../models"
 import { saveLastSyncTime } from "../services/AsyncStorage"
 import { GoogleDrive } from "../apis/GoogleDrive"
@@ -163,9 +163,7 @@ export const transformTasksToHeatmapData = (tasks: TaskModel[]): HeatmapData => 
         const hour = dateObj.getHours()
         const roundedHour = Math.floor(hour / 2) * 2
 
-        // Tính số session (mỗi 25 phút = 1500 giây)
-        const SESSION_LENGTH = 1500 // 25 phút
-        const sessionCount = Math.floor(task.actualFocusTimeInSec / SESSION_LENGTH)
+        const sessionCount = Math.floor(task.actualFocusTimeInSec / FOCUS_DURATION)
         if (sessionCount < 1) return // bỏ qua nếu chưa đủ 1 session
 
         if (!data[label]) data[label] = {}

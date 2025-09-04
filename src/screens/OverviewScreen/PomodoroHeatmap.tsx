@@ -95,10 +95,8 @@ const styles = StyleSheet.create({
   cell: {
     width: CELL_WIDTH,
     height: CELL_HEIGHT,
-    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   pomodoroBar: {
     width: 8,
